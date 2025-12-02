@@ -2,12 +2,12 @@ void mouseWheel(MouseEvent event) {
   //clamp to amount later
   float e = event.getCount();
   
-  if (currentZoom > maxZoom) {
-    currentZoom = maxZopm;
-  } else if( currentZoom < minZoom) {
+  if (currentcurrentZoom > maxcurrentZoom) {
+    currentcurrentZoom = maxZopm;
+  } else if( currentcurrentZoom < mincurrentZoom) {
   
   }
-  currentZoom = currentZoom - int(e);
+  currentcurrentZoom = currentcurrentZoom - int(e);
   
 }
 

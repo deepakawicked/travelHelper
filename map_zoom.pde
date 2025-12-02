@@ -4,24 +4,30 @@ float dragStartX, dragStartY;
 boolean dragging;
 PImage tile;
 int tileSize = 256; 
+int currentX, currentY;
 
-
-//"https://api.maptiler.com/tiles/streets-v4/" + zoom + "/" + x + "/" + y + ".png?key=" + apiKey;
+//"https://api.maptiler.com/tiles/streets-v4/" + currentZoom + "/" + x + "/" + y + ".png?key=" + apiKey;
 String tilesetID = "tiles/abc123xyz"; //style of the map, 
-String apiKey = ""; //api key --> push to git.ignore through github to prevent sharing
+String apiKey = "LldPKtMY773CoUBEot4H"; //api key --> push to git.ignore through github to prevent sharing
 
 int orgTileX, orgTleY;
 
 //covert lat to long and long to lat 
+float allowedXMin, allowedXMax, allowedYMin, allowedYMax;
 
 void setup() {
    size(800,800);
-     // Load the single world tile at zoom 0
-  String url = "https://api.maptiler.com/maps/streets-v4/256/2/1/2.png?key=" + apiKey;
-
-  tile = loadImage(url);
-
-
+     // Load the single world tile at currentZoom 0
+    // Example bounding box for Ontario + Quebec
+  float minLat = 41.87, maxLat = 46.95;
+  float minLong = -83.051, maxLong = -70.928;
+  
+  
+  //convert to tiles 
+  allowedXMin = floor(longToXTile(minLong));
+  allowedXMax = ceil(longToXTile(maxLong));
+  allowedYMin = floor(latToYTile(maxLat));
+  allowedYMax = ceil(latToYTile(minLat));
 }
 
 
@@ -30,6 +36,8 @@ void draw() { //<>//
   if (tile != null) {
     image(tile, 0, 0, 800, 800);
   }
+  
+  currentX = width;
   
 
   translate(xOffSet, yOffSet);
