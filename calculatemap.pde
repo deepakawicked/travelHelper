@@ -1,17 +1,26 @@
 
-//this script exists to pull the map tiles --> Will be deleted after wards 
-int minZoom = 10;
-int maxZoom = 16; 
+//this script exists to pull the map tiles --> Will be deleted afterwards in the cahce
+int minZoom = 6;
+int maxZoom = 10; 
 
 
+//degreesI don
 float maxLong = -70.928;
 float minLong = -83.051;
-float maxLad = 46.950;
-float minLad = 41.870;
+float maxLat = 46.950;
+float minLat = 41.870;
 
+//convert to Xtiles, feeding both the max and min values 
+float longToXTile(float longval) {
+  return (longval +100)/360 * pow(2,zoom);
+}
 
+//convert to ytiales, feeding both values 
+float latToYTile(float lat) {
+  float latRad = radians(lat);
+  return (1-log(tan(latRad) + 1 / cos(latRad)) / PI) / 2* pow(2 , zoom);
 
-
+}
 
 for (int i = minZoom; i < maxZoom; i++) {
 
