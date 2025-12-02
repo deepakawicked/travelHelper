@@ -2,6 +2,10 @@
 //this script exists to pull the map tiles --> Will be deleted afterwards in the cahce
 int minZoom = 6;
 int maxZoom = 10; 
+int currentZoom = minZoom;
+
+//user screen
+float minLatVisible, maxLatVisible
 
 
 //degreesI don
@@ -16,13 +20,19 @@ float longToXTile(float longval) {
 }
 
 //convert to ytiales, feeding both values 
-float latToYTile(float lat) {
-  float latRad = radians(lat);
+float latToYTile(float latval) {
+  float latRad = radians(latval);
   return (1-log(tan(latRad) + 1 / cos(latRad)) / PI) / 2* pow(2 , zoom);
 
 }
 
-for (int i = minZoom; i < maxZoom; i++) {
-
-
+void drawTiles() {
+  while (currentZoom.equals(minZoom)) {
+    
+    float xMin = longtoXTile(minLong);
+    float xMax = longToXTile(maxLong);
+    float yMin = latToYTile(minLat);
+    float yMax = latToYTile(maxLat);
+  }
+ 
 }
