@@ -2,7 +2,6 @@ JSONObject mapdata;  //store the JSON Data of map data
 float xOffSet = 0, yOffSet = 0;
 float dragStartX, dragStartY;
 boolean dragging;
-int zoom = 0; //determines the asked zoom levels
 PImage tile;
 int tileSize = 256; 
 
