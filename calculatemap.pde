@@ -1,4 +1,6 @@
+//loading: world cooders --> mercator projecitons --> x,y processng oswa
 
+//when requesting: 
 //this script exists to pull the map tiles
 int minZoom = 6;
 int maxZoom = 10; 
@@ -22,7 +24,9 @@ float yMax = ceil(latToYTile(maxLat));
     
 
 //user screen --> Only draw the tiles needed for these 
-float minLatVisible, maxLatVisible, minLongVisble, minMaxVisible;
+float minLatVisible
+
+maxLatVisible, minLongVisble, minMaxVisible;
 
 
 
@@ -39,17 +43,27 @@ float latToYTile(float latval) {
 
 }
 
+float tileToWorldX(int tileX) {// convet to world X
+  return tileX * pow(2, zoom);
+}
+
+float tileToWorldY(int tileY) { //convert to world Y
+  return tileY * pow(2, zoom);
+}
+
+float bounding 
 void getTile(int x, int y, int zoom) {} //request tiles from mapTiler or other backup options 
 void drawTiles() {
+  float mapSize = 256 * pow(2, zoom); //convert the visable amount of pixles 
+  worldX = x*
   while (zooming) {
-    
-
-    
+    //bounding box 
     xMinVisible = floor(longToXTile(minLongVisible));
     xMaxVisible = ceil(longToXTile(maxLongVisible)) - 1;
-
     yMinVisible = floor(latToYTile(maxLatVisible));
     yMaxVisible = ceil(latToYTile(minLatVisible)) - 1;
+    
+    if (xMinVisible > 
   }
  
 }
