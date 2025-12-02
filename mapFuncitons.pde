@@ -5,14 +5,13 @@ float longToXTile(float longval) {
 //convert to ytiales, feeding both values 
 float latToYTile(float latval) {
   float latRad = radians(latval);
-  return (1-log(tan(latRad) + 1 / cos(latRad)) / PI) / 2* pow(2 , currenoom);
-
+  return (1 - (log(tan(latRad) + 1 / cos(latRad)) / PI)) / 2 * pow(2, currentZoom);
 }
 
 float tileToWorldX(int tileX) {// convet to world X
-  return tileX * pow(2, zoom);
+  return tileX * tileSize;
 }
 
 float tileToWorldY(int tileY) { //convert to world Y
-  return tileY * pow(2, zoom);
+  return tileY * tileSize;
 }

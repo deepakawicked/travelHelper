@@ -6,6 +6,7 @@ PImage tile;
 int tileSize = 256; 
 int currentX, currentY;
 
+
 //"https://api.maptiler.com/tiles/streets-v4/" + currentZoom + "/" + x + "/" + y + ".png?key=" + apiKey;
 String tilesetID = "tiles/abc123xyz"; //style of the map, 
 String apiKey = ""; //api key --> push to git.ignore through github to prevent sharing
@@ -33,14 +34,10 @@ void setup() {
 
 void draw() { //<>//
   background(0);
-  if (tile != null) {
-    image(tile, 0, 0, 800, 800);
-  }
-  
-  currentX = width;
   
 
   translate(xOffSet, yOffSet);
   circle(width/2, height/2, 30);
+  drawTiles();
   
 }
