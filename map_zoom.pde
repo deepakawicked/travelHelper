@@ -9,7 +9,7 @@ int currentX, currentY;
 
 //"https://api.maptiler.com/tiles/streets-v4/" + currentZoom + "/" + x + "/" + y + ".png?key=" + apiKey;
 String tilesetID = "tiles/abc123xyz"; //style of the map, 
-String apiKey = ""; //api key --> push to git.ignore through github to prevent sharing
+String apiKey = "LldPKtMY773CoUBEot4H"; //api key --> push to git.ignore through github to prevent sharing
 
 int orgTileX, orgTleY;
 
@@ -17,6 +17,7 @@ int orgTileX, orgTleY;
 float allowedXMin, allowedXMax, allowedYMin, allowedYMax;
 
 void setup() {
+  currentZoom = 7;
    size(800,800);
      // Load the single world tile at currentZoom 0
     // Example bounding box for Ontario + Quebec
@@ -37,9 +38,6 @@ void draw() { //<>//
   textSize(30);
   fill(255,0, 0);
   text("Zoom:" + currentZoom, 50, 50, 50);
-  
-
-  translate(xOffSet, yOffSet);
   circle(width/2, height/2, 30);
   drawTiles();
   
