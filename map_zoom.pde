@@ -34,6 +34,9 @@ void setup() {
 
 void draw() { //<>//
   background(0);
+  textSize(30);
+  fill(255,0, 0);
+  text("Zoom:" + currentZoom, 50, 50, 50);
   
 
   translate(xOffSet, yOffSet);

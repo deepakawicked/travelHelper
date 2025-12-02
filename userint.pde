@@ -1,13 +1,10 @@
 void mouseWheel(MouseEvent event) {
   //clamp to amount later
   float e = event.getCount();
-  
-  if (currentZoom > maxZoom) {
-     currentZoom = maxZoom;
-  } else if( currentZoom < minZoom) {
-    currentZoom = minZoom;
-  }
+  currentZoom = constrain(currentZoom, 7, 9);
   currentZoom = currentZoom - int(e);
+  println("Current Zoom" + currentZoom);
+  
   
 }
 
