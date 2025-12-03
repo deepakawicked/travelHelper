@@ -8,8 +8,8 @@ int currentX, currentY;
 
 
 //"https://api.maptiler.com/tiles/streets-v4/" + currentZoom + "/" + x + "/" + y + ".png?key=" + apiKey;
-String tilesetID = "tiles/abc123xyz"; //style of the map, 
-String apiKey = "LldPKtMY773CoUBEot4H"; //api key --> push to git.ignore through github to prevent sharing
+String url =  
+String apiKey = "" //api key --> push to git.ignore through github to prevent sharing
 
 int orgTileX, orgTleY;
 
