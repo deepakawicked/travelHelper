@@ -19,31 +19,72 @@ class TileMap {
     this.maxZoom = maxZ;
   }
   
-  void calculateSeen() {
+int[] calculateSeen() {
+  // screen bounds in "world pixels"
+  float left = -xOffSet;
+  float top = -yOffSet;
+  float right = left + width;
+  float bottom = top + height;
+
+  // convert bounding box of screen into tile coordinates
+  int minTileX = floor(left / tileSize);
+  int maxTileX = floor(right / tileSize);
+  int minTileY = floor(top / tileSize);
+  int maxTileY = floor(bottom / tileSize);
+
+  // clamp to the allowed region (min/max lat/lon)
+  minTileX = max(minTileX, floor(longToXTile(minLon)));
+  maxTileX = min(maxTileX, ceil(longToXTile(maxLon)));
+  minTileY = max(minTileY, floor(latToYTile(maxLat)));
+  maxTileY = min(maxTileY, ceil(latToYTile(minLat)));
+  int[] clampLst = {minTileX, maxTileX, minTileY, maxTileY};
+  return clampLst;
+}
     
-    float xMaxSeen;
-    float yMinSeen;
-    float xMaxSeen;
-    float yMaxSeen;
     
-    for (int i = 0; i < tiles.size(); i++) {
-      Tile currentCheck = tiles.get(i);
-      
-      //delete from cache (call cache manager function)
-    
+  
+  }
+  
+  void updateTileCache() {
+    int[] bounds = calculateSeen();
+    int minTileX = bounds[0];
+    int maxTileX = bounds[1];
+    int minTileY = bounds[2];
+    int maxTileY = bounds[3];
+
+  // iterate backwards to safely remove items
+    for (int i = tiles.size() - 1; i >= 0; i--) {
+      Tile t = tiles.get(i);
+
+      int tileX = (int)t.tileLocation.x;
+      int tileY = (int)t.tileLocation.y;
+
+    // if outside the visible tile bounds
+      if (tileX < minTileX || tileX > maxTileX || tileY < minTileY || tileY > maxTileY) {
+        // remove from list
+        tiles.remove(i);
+
+        // free memory
+        t.tileImg = null;
+
+        // optionally delete from disk cache
+        String path = sketchPath(tileCache + "/" + currentZoom + "/" + tileX + "/" + tileY + ".png");
+        File f = new File(path);
+        if (f.exists()) {
+          f.delete();
+        }
+      }
     }
-    
-    
-    
-  
   }
-  
-  void updateTileCache() { //update from catch
-    
-  }
+
   
   void drawTiles()  { //draw the full tile set 
-  
+    for(int i = 0; i < tiles.get(); i++) {
+       Tile tL = tiles.get(i);
+       
+       tl.drawTile();
+       tL.updatePos();
+    }
   
   }
 

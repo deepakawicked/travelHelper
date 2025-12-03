@@ -1,6 +1,7 @@
 import g4p_controls.*;
 
 
+TileMap streetMap;
 
 String startCity;
 PVector startingPosition;
@@ -44,16 +45,12 @@ void setup() {
   float minLat = 41.87, maxLat = 46.95;
   float minLong = -83.051, maxLong = -70.928;
   
-  
-  //convert to tiles 
-  allowedXMin = floor(longToXTile(minLong));
-  allowedXMax = ceil(longToXTile(maxLong));
-  allowedYMin = floor(latToYTile(maxLat));
-  allowedYMax = ceil(latToYTile(minLat));
+  streetMap = new TileMap(minLat, maxLat, mingLong, maxLong);
 }
 
 
 void draw() { //<>//
+  
   background(0);
   textSize(30);
   fill(255,0, 0);

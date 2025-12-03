@@ -1,3 +1,0 @@
-class city extends location {
-  
-}
