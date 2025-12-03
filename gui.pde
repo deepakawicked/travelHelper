@@ -54,10 +54,6 @@ public void dropList1_click4(GDropList source, GEvent event) { //_CODE_:startTim
   println("startTimes - GDropList >> GEvent." + event + " @ " + millis());
 } //_CODE_:startTimes:262427:
 
-public void imgButton1_click1(GImageButton source, GEvent event) { //_CODE_:imgButton1:580752:
-  println("imgButton1 - GImageButton >> GEvent." + event + " @ " + millis());
-} //_CODE_:imgButton1:580752:
-
 
 
 // Create all the GUI controls. 
@@ -160,8 +156,6 @@ public void createGUI(){
   label13.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label13.setText("Attractions + Stops:");
   label13.setOpaque(true);
-  imgButton1 = new GImageButton(window1, 222, 38, 100, 60, new String[] { "Untitled31_20251103011713.jpeg", "Untitled31_20251103011713.jpeg", "Untitled31_20251103011713.jpeg" } );
-  imgButton1.addEventHandler(this, "imgButton1_click1");
   window1.loop();
 }
 
@@ -189,4 +183,3 @@ GLabel label11;
 GLabel label12; 
 GDropList startTimes; 
 GLabel label13; 
-GImageButton imgButton1; 

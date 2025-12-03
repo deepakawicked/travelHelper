@@ -4,7 +4,7 @@ class Tile {
   //processing coodernates and locks it into one class 
   Boolean loaded = false; //is not true, and the tile is the processing range 
   float size; //sizes of the tile, detrmine by zoom and change by it
-  boolean failed = false; //if there is a bad server request 
+  boolean failed = false; //if there is a bad server request
   
   Tile(PVector TL) {
     this.TileLocation = TL;
@@ -28,6 +28,8 @@ class Tile {
     }
   
   }
+  
+  //add implemention for using the cache only 
   void drawTile(int x, int y, int zoom) { // draw the tile as first --> This functions draws the white and wiats fro the request to come through
 
     if (loaded && tileImg != null) { //if the request is good, draw the map

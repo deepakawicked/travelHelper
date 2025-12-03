@@ -1,3 +1,8 @@
+import g4p_controls.*;
+
+
+
+
 JSONObject mapdata;  //store the JSON Data of map data 
 float xOffSet = 0, yOffSet = 0;
 float dragStartX, dragStartY;
@@ -8,7 +13,6 @@ int currentX, currentY;
 
 
 //"https://api.maptiler.com/tiles/streets-v4/" + currentZoom + "/" + x + "/" + y + ".png?key=" + apiKey;
-String apiKey = "" //api key --> push to git.ignore through github to prevent sharing
 
 String apiKey = ""; //api key --> push to git.ignore through github to prevent sharing
 
@@ -18,6 +22,8 @@ int orgTileX, orgTleY;
 float allowedXMin, allowedXMax, allowedYMin, allowedYMax;
 
 void setup() {
+  createGUI();
+   
   currentZoom = 7;
    size(800,800);
      // Load the single world tile at currentZoom 0

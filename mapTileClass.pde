@@ -21,11 +21,20 @@ class TileMap {
   
   void calculateSeen() {
     
+    for (int i = 0; i < tiles.size(); i++) {
+      Tile currentCheck = tiles.get(i);
+    
+    }
   
   }
   
   void updateTileCache() { //update from catch
     
+  }
+  
+  void drawTiles() //draw the full tile set {
+  
+  
   }
 
 }
