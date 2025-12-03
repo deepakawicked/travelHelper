@@ -5,6 +5,7 @@ class Tile {
   Boolean loaded = false; //is not true, and the tile is the processing range 
   float size; //sizes of the tile, detrmine by zoom and change by it
   boolean failed = false; //if there is a bad server request
+  boolean storied = false; //flag if the cache is stored in memory 
   
   Tile(PVector TL) {
     this.TileLocation = TL;
@@ -21,7 +22,6 @@ class Tile {
     this.tileImg = loadImage(url);
     loaded = true;
     }
-    
     catch(Exception e) {
        println("Failed to load tile at " + x + "," + y + ": " + e.getMessage());
        failed = true;
@@ -51,7 +51,8 @@ class Tile {
   }
   
   void updatePos() { //based off dragging and offset
-  
+    locationProcessing.x += xOffSet;
+    locationProcessing.y += yOffset;
   
   } 
   

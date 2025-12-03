@@ -6,12 +6,16 @@ String startCity;
 PVector startingPosition;
 
 JSONObject mapdata;  //store the JSON Data of map data 
+
+
+
+//dragging 
 float xOffSet = 0, yOffSet = 0;
 float dragStartX, dragStartY;
 boolean dragging;
-PImage tile;
-int tileSize = 256; 
-int currentX, currentY;
+
+//world coords
+float top, bottom, left, right;
 
 
 //"https://api.maptiler.com/tiles/streets-v4/" + currentZoom + "/" + x + "/" + y + ".png?key=" + apiKey;
@@ -24,10 +28,17 @@ int orgTileX, orgTleY;
 float allowedXMin, allowedXMax, allowedYMin, allowedYMax;
 
 void setup() {
+  size(800,800);
+  top = -yOffSet;
+  bottom = height-yOffSet;
+  left = xOffSet;
+  right = xOffSet+width;
+  
+  
   createGUI();
    
-  currentZoom = 7;
-   size(800,800);
+
+   
      // Load the single world tile at currentZoom 0
     // Example bounding box for Ontario + Quebec
   float minLat = 41.87, maxLat = 46.95;
@@ -46,8 +57,7 @@ void draw() { //<>//
   background(0);
   textSize(30);
   fill(255,0, 0);
-  text("Zoom:" + currentZoom, 50, 50, 50);
+
   circle(width/2, height/2, 30);
-  drawTiles();
-  
+   
 }

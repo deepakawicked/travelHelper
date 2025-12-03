@@ -21,10 +21,20 @@ class TileMap {
   
   void calculateSeen() {
     
+    float xMaxSeen;
+    float yMinSeen;
+    float xMaxSeen;
+    float yMaxSeen;
+    
     for (int i = 0; i < tiles.size(); i++) {
       Tile currentCheck = tiles.get(i);
+      
+      //delete from cache (call cache manager function)
     
     }
+    
+    
+    
   
   }
   
@@ -32,7 +42,7 @@ class TileMap {
     
   }
   
-  void drawTiles() //draw the full tile set {
+  void drawTiles()  { //draw the full tile set 
   
   
   }
