@@ -1,6 +1,7 @@
 String tileCache = "tilestorage";
 
 class Tile {
+  PImage tileImg;
   PVector locationProcessing, tileLocation, RealCoods; //tracks the 
   //processing coodernates and locks it into one class 
   Boolean loaded = false; //is not true, and the tile is the processing range 

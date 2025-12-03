@@ -45,16 +45,22 @@ void setup() {
   float minLat = 41.87, maxLat = 46.95;
   float minLong = -83.051, maxLong = -70.928;
   
-  streetMap = new TileMap(minLat, maxLat, mingLong, maxLong);
+  streetMap = new TileMap(minLat, maxLat, minLong, maxLong);
+  streetMap.tiles = new ArrayList<Tile>();
+  streetMap.currentZoom = 7; // example zoom
 }
 
 
-void draw() { //<>//
-  
+void draw() {
   background(0);
-  textSize(30);
-  fill(255,0, 0);
 
+  // update which tiles are loaded / removed
+  streetMap.updateTileCache();
+
+  // draw the tiles
+  streetMap.drawTiles();
+
+  // optional: center marker
+  fill(255,0,0);
   circle(width/2, height/2, 30);
-   
 }

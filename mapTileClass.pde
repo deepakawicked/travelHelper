@@ -52,40 +52,60 @@ int[] calculateSeen() {
     int minTileY = bounds[2];
     int maxTileY = bounds[3];
 
-  // iterate backwards to safely remove items
-    for (int i = tiles.size() - 1; i >= 0; i--) {
-      Tile t = tiles.get(i);
+  // Remove tiles out of bounds
+  for (int i = tiles.size()-1; i >= 0; i--) {
+    Tile t = tiles.get(i);
+    int tileX = (int)t.tileLocation.x;
+    int tileY = (int)t.tileLocation.y;
 
-      int tileX = (int)t.tileLocation.x;
-      int tileY = (int)t.tileLocation.y;
+    if (tileX < minTileX || tileX > maxTileX || tileY < minTileY || tileY > maxTileY) {
+      tiles.remove(i);
+      t.tileImg = null; // free memory
 
-    // if outside the visible tile bounds
-      if (tileX < minTileX || tileX > maxTileX || tileY < minTileY || tileY > maxTileY) {
-        // remove from list
-        tiles.remove(i);
+      // Delete from disk if needed
+      String path = sketchPath(tileCache + "/" + currentZoom + "/" + tileX + "/" + tileY + ".png");
+      File f = new File(path);
+      if (f.exists()) f.delete();
+    }
+  }
 
-        // free memory
-        t.tileImg = null;
-
-        // optionally delete from disk cache
-        String path = sketchPath(tileCache + "/" + currentZoom + "/" + tileX + "/" + tileY + ".png");
-        File f = new File(path);
-        if (f.exists()) {
-          f.delete();
+  // Add missing tiles
+  for (int x = minTileX; x <= maxTileX; x++) {
+    for (int y = minTileY; y <= maxTileY; y++) {
+      boolean exists = false;
+      for (Tile t : tiles) {
+        if ((int)t.tileLocation.x == x && (int)t.tileLocation.y == y) {
+          exists = true;
+          break;
         }
+      }
+
+      if (!exists) {
+        PVector loc = new PVector(x, y); // store tile coordinates
+        Tile newTile = new Tile(loc);
+
+        // Try loading from cache first
+        newTile.tileImg = newTile.loadTileFromCache(x, y, currentZoom);
+
+        // If cache missing, request from API
+        if (newTile.tileImg == null) {
+          newTile.tileImg = newTile.requestTile(x, y, currentZoom);
+          if (newTile.tileImg != null) {
+            newTile.saveTileToCache(x, y, currentZoom, newTile.tileImg);
+          }
+        }
+
+        tiles.add(newTile);
       }
     }
   }
-
-  
-  void drawTiles()  { //draw the full tile set 
-    for(int i = 0; i < tiles.get(); i++) {
-       Tile tL = tiles.get(i);
-       
-       tl.drawTile();
-       tL.updatePos();
-    }
-  
   }
 
-}
+
+  
+ void drawTiles() {
+  for (Tile t : tiles) {
+    t.updatePos(); // update screen position based on offsets
+    t.drawTile();  // draw the tile
+  }
+ }
