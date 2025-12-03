@@ -19,12 +19,13 @@ class TileMap {
     this.maxZoom = maxZ;
   }
   
-  void calculateSeen() {//calculates the tiles needed to be requested on screen
-  //passes along to tiles 
+  void calculateSeen() {
+    
   
   }
   
   void updateTileCache() { //update from catch
+    
   }
 
 }

@@ -30,11 +30,11 @@ class Tile {
   }
   void drawTile(int x, int y, int zoom) { // draw the tile as first --> This functions draws the white and wiats fro the request to come through
 
-    if (loaded % tileImg != null) { //if the request is good, draw the map
-      image(tileImg, locationProcessing.x, locationProcessing.y, size, size)
+    if (loaded && tileImg != null) { //if the request is good, draw the map
+      image(tileImg, locationProcessing.x, locationProcessing.y, size, size);
     
     } else if (failed) {
-      fill(255,0,0)//red box for failed tiles
+      fill(255,0,0);//red box for failed tiles
       noStroke();
       rect(locationProcessing.x, locationProcessing.y, size, size);
     
@@ -42,7 +42,7 @@ class Tile {
       //placeholder if no internet or intenret is slow 
       fill(255);
       noStroke();
-      rect(drawX, drawY, size, size);
+      rect(locationProcessing.x, locationProcessing.y,  size, size);
     
     }
   

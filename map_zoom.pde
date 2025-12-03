@@ -8,8 +8,9 @@ int currentX, currentY;
 
 
 //"https://api.maptiler.com/tiles/streets-v4/" + currentZoom + "/" + x + "/" + y + ".png?key=" + apiKey;
-String url =  
 String apiKey = "" //api key --> push to git.ignore through github to prevent sharing
+
+String apiKey = ""; //api key --> push to git.ignore through github to prevent sharing
 
 int orgTileX, orgTleY;
 
