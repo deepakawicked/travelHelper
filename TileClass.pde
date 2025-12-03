@@ -29,7 +29,7 @@ class Tile {
   
   }
   
-  //add implemention for using the cache only 
+  //add implemention for using the cache after a tile is downloased 
   void drawTile(int x, int y, int zoom) { // draw the tile as first --> This functions draws the white and wiats fro the request to come through
 
     if (loaded && tileImg != null) { //if the request is good, draw the map

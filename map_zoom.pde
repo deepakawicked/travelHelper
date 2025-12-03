@@ -2,6 +2,8 @@ import g4p_controls.*;
 
 
 
+String startCity;
+PVector startingPosition;
 
 JSONObject mapdata;  //store the JSON Data of map data 
 float xOffSet = 0, yOffSet = 0;
