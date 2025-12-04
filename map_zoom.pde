@@ -1,6 +1,5 @@
 import g4p_controls.*;
 
-
 TileMap streetMap;
 
 String startCity;
@@ -15,9 +14,6 @@ float xOffSet = 0, yOffSet = 0;
 float dragStartX, dragStartY;
 boolean dragging;
 
-//world coords
-float top, bottom, left, right;
-
 
 //"https://api.maptiler.com/tiles/streets-v4/" + currentZoom + "/" + x + "/" + y + ".png?key=" + apiKey;
 
@@ -30,10 +26,10 @@ float allowedXMin, allowedXMax, allowedYMin, allowedYMax;
 
 void setup() {
   size(800,800);
-  top = -yOffSet;
-  bottom = height-yOffSet;
-  left = xOffSet;
-  right = xOffSet+width;
+  //top = -yOffSet;
+  //bottom = height-yOffSet;
+  //left = xOffSet;
+  //right = xOffSet+width;
   
   
   createGUI();
@@ -45,9 +41,9 @@ void setup() {
   float minLat = 41.87, maxLat = 46.95;
   float minLong = -83.051, maxLong = -70.928;
   
-  streetMap = new TileMap(minLat, maxLat, minLong, maxLong);
-  streetMap.tiles = new ArrayList<Tile>();
-  streetMap.currentZoom = 7; // example zoom
+  streetMap = new TileMap(minLat, maxLat, minLong, maxLong, 7, 6, 10);
+  
+  
 }
 
 
@@ -55,10 +51,8 @@ void draw() {
   background(0);
 
   // update which tiles are loaded / removed
-  streetMap.updateTileCache();
+  streetMap.drawTiles();//draw the Tiles 
 
-  // draw the tiles
-  streetMap.drawTiles();
 
   // optional: center marker
   fill(255,0,0);

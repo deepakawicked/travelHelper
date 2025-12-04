@@ -1,11 +1,11 @@
-float longToXTile(float longval) {
-  return (longval +180)/360 * pow(2, currentZoom);
+float longToXTile(float longval. TileMap t) {
+  return (longval +180)/360 * pow(2, t.currentZoom);
 }
 
 //convert to ytiales, feeding both values 
-float latToYTile(float latval) {
+float latToYTile(float latval, TileMap t) {
   float latRad = radians(latval);
-  return (1 - (log(tan(latRad) + 1 / cos(latRad)) / PI)) / 2 * pow(2, currentZoom);
+  return (1 - (log(tan(latRad) + 1 / cos(latRad)) / PI)) / 2 * pow(2, t.currentZoom);
 }
 
 float tileToWorldX(int tileX) {// convet to world X
@@ -15,6 +15,12 @@ float tileToWorldX(int tileX) {// convet to world X
 float tileToWorldY(int tileY) { //convert to world Y
   return tileY * tileSize;
 }
+
+
+
+
+//-----------------------------USER INPUTS----------------------------------------------------|
+
 
 void mouseWheel(MouseEvent event) {
   //clamp to amount later
