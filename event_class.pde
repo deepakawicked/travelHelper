@@ -50,6 +50,7 @@ class Event{
      fill(0);
      //text("Please ensure your events aren't overlapping!", width/2 -130, height/2);
      //println("Please ensure your events aren't overlapping!");
+     events.remove(this);
    }
   }
     
