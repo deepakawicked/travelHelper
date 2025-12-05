@@ -2,59 +2,48 @@ import g4p_controls.*;
 
 TileMap streetMap;
 
-String startCity;
-PVector startingPosition;
 
-JSONObject mapdata;  //store the JSON Data of map data 
+boolean simulateMap = false;
+String apiKey = ""; // your MapTiler API key
 
-
-
-//dragging 
-float xOffSet = 0, yOffSet = 0;
+// dragging
+float xOffSet, yOffSet;
 float dragStartX, dragStartY;
 boolean dragging;
 
-
-//"https://api.maptiler.com/tiles/streets-v4/" + currentZoom + "/" + x + "/" + y + ".png?key=" + apiKey;
-
-String apiKey = ""; //api key --> push to git.ignore through github to prevent sharing
-
-int orgTileX, orgTleY;
-
-//covert lat to long and long to lat 
-float allowedXMin, allowedXMax, allowedYMin, allowedYMax;
+// slow scroll zoom
+float zoomAccumulator = 0;
+float zoomThreshold = 1.5;
 
 void setup() {
-  size(800,800);
-  //top = -yOffSet;
-  //bottom = height-yOffSet;
-  //left = xOffSet;
-  //right = xOffSet+width;
-  
-  
-  createGUI();
-   
+  size(800, 800);
 
-   
-     // Load the single world tile at currentZoom 0
-    // Example bounding box for Ontario + Quebec
+  // Example bounding box for Ontario + Quebec
   float minLat = 41.87, maxLat = 46.95;
-  float minLong = -83.051, maxLong = -70.928;
+  float minLon = -83.051, maxLon = -70.928;
   
-  streetMap = new TileMap(minLat, maxLat, minLong, maxLong, 7, 6, 10);
-  
-  
+  streetMap = new TileMap(minLat, maxLat, minLon, maxLon, 7, 6, 10);
+
+  // center offsets at start
+  float startLon = (minLon + maxLon) / 2;
+  float startLat = (minLat + maxLat) / 2;
+  float centerTileX = longToXTile(startLon, streetMap.currentZoom);
+  float centerTileY = latToYTile(startLat, streetMap.currentZoom);
+  xOffSet = width/2 - centerTileX * streetMap.tileSize;
+  yOffSet = height/2 - centerTileY * streetMap.tileSize;
 }
 
-
 void draw() {
-  background(0);
-
-  // update which tiles are loaded / removed
-  streetMap.drawTiles();//draw the Tiles 
-
-
-  // optional: center marker
-  fill(255,0,0);
+  background(255);
+  
+  // update visible tiles
+  if (simulateMap) {
+     streetMap.update(xOffSet, yOffSet);
+     streetMap.drawTiles();
+  }
+ 
+  
+  // center marker
+  fill(255, 0, 0);
   circle(width/2, height/2, 30);
 }
