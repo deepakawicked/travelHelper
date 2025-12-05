@@ -4,7 +4,7 @@ TileMap streetMap;
 
 
 boolean simulateMap = false;
-String apiKey = ""; // your MapTiler API key
+String apiKey = ""; // MapTiler API key
 
 // dragging
 float xOffSet, yOffSet;
@@ -16,6 +16,8 @@ float zoomAccumulator = 0;
 float zoomThreshold = 1.5;
 
 void setup() {
+  
+  createGUI();
   size(800, 800);
 
   // Example bounding box for Ontario + Quebec
