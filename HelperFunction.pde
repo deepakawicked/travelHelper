@@ -18,6 +18,7 @@ void mouseReleased() {
 
 // ------------------------- TILE FUNCTIONS -------------------------
 float longToXTile(float longval, int zoom) {
+
   return (longval + 180) / 360 * pow(2, zoom);
 }
 
@@ -34,4 +35,5 @@ void createEvent(){
     events.add(new Event(n,st,d));
 
   }
+  
   
