@@ -25,3 +25,13 @@ float latToYTile(float latval, int zoom) {
   float latRad = radians(latval);
   return (1 - (log(tan(latRad) + 1 / cos(latRad)) / PI)) / 2 * pow(2, zoom);
 }
+
+//------------------------- CALENDAR FUNCTIONS --------------------
+void createEvent(){
+    String n = "name"; //attach to location/attraction classes after
+    String st = startTimes.getSelectedText();
+    int d = duration.getValueI();
+    events.add(new Event(n,st,d));
+
+  }
+  

@@ -15,11 +15,24 @@ boolean dragging;
 float zoomAccumulator = 0;
 float zoomThreshold = 1.5;
 
+
+//Calendar variables
+ArrayList <Event> events = new ArrayList <Event>();
+boolean showCalendar;
+PImage calendarImg;
+PFont font; 
+
 void setup() {
   
   createGUI();
   size(800, 800);
-
+  font = createFont("Times New Roman", 15);
+  
+  //calendar image
+  imageMode(CENTER);
+  calendarImg = loadImage("calendar.png");
+  calendarImg.resize(250,0);
+  
   // Example bounding box for Ontario + Quebec
   float minLat = 41.87, maxLat = 46.95;
   float minLon = -83.051, maxLon = -70.928;
@@ -43,7 +56,14 @@ void draw() {
      streetMap.update(xOffSet, yOffSet);
      streetMap.drawTiles();
   }
- 
+  
+  //Calendar code
+  if (showCalendar){
+    image(calendarImg, 150, 300);
+    for (int i = 0; i < events.size(); i++){
+      events.get(i).drawEvent();
+    }
+  }
   
   // center marker
   fill(255, 0, 0);
