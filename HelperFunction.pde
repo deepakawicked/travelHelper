@@ -1,4 +1,5 @@
 // ------------------------- MOUSE DRAG -------------------------
+
 void mousePressed() {
   dragging = true;
   dragStartX = mouseX - xOffSet;
@@ -16,7 +17,21 @@ void mouseReleased() {
   dragging = false;
 }
 
+
+//detects the mouse press
+void mouseWheel(MouseEvent event) {
+  
+  float e = event.getCount(); //+1 or -1
+  streetMap.currentZoom =- int(e); 
+  streetMap.currentZoom = constrain(streetMap.currentZoom, 7, 9); //clamp
+  //the zoom to prevent too much tile requests 
+  println("Current Zoom" + streetMap.currentZoom);
+}
+
 // ------------------------- TILE FUNCTIONS -------------------------
+
+//covert from the latitude/longitude grid of the real world to the tile System
+//most commonly found in google maps and API's (Maptiler, etc)
 float longToXTile(float longval, int zoom) {
 
   return (longval + 180) / 360 * pow(2, zoom);

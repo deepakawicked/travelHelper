@@ -2,9 +2,9 @@ import g4p_controls.*;
 
 TileMap streetMap;
 
-
-boolean simulateMap = false;
-String apiKey = ""; // MapTiler API key
+//fill these if needed to found
+boolean simulateMap = true;
+String apiKey = ""; // MapTiler API key, not included in push
 
 // dragging
 float xOffSet, yOffSet;
@@ -14,6 +14,7 @@ boolean dragging;
 // slow scroll zoom
 float zoomAccumulator = 0;
 float zoomThreshold = 1.5;
+float tileSize = 256;
 
 
 //Calendar variables
@@ -37,6 +38,7 @@ void setup() {
   float minLat = 41.87, maxLat = 46.95;
   float minLon = -83.051, maxLon = -70.928;
   
+  //feeding into the stretmap
   streetMap = new TileMap(minLat, maxLat, minLon, maxLon, 7, 6, 10);
 
   // center offsets at start
@@ -44,14 +46,14 @@ void setup() {
   float startLat = (minLat + maxLat) / 2;
   float centerTileX = longToXTile(startLon, streetMap.currentZoom);
   float centerTileY = latToYTile(startLat, streetMap.currentZoom);
-  xOffSet = width/2 - centerTileX * streetMap.tileSize;
-  yOffSet = height/2 - centerTileY * streetMap.tileSize;
+  xOffSet = width/2 - centerTileX * tileSize;
+  yOffSet = height/2 - centerTileY * tileSize;
 }
 
 void draw() {
-  background(255);
+  background(200, 255, 200);
   
-  // update visible tiles
+  //update tiles
   if (simulateMap) {
      streetMap.update(xOffSet, yOffSet);
      streetMap.drawTiles();
@@ -67,5 +69,5 @@ void draw() {
   
   // center marker
   fill(255, 0, 0);
-  circle(width/2, height/2, 30);
+  circle(width/2, height/2, 5);
 }
