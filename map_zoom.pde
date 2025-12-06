@@ -12,8 +12,8 @@ float dragStartX, dragStartY;
 boolean dragging;
 
 // slow scroll zoom
-float zoomAccumulator = 0;
-float zoomThreshold = 1.5;
+float displayScale = 1.0;
+float zoomStep = 0.1;
 float tileSize = 256;
 
 
@@ -53,11 +53,17 @@ void setup() {
 void draw() {
   background(200, 255, 200);
   
+  pushMatrix();
+  translate(mouseX, mouseY );
+  scale(displayScale);
+  translate(-mouseX, -mouseY);
+  
   //update tiles
   if (simulateMap) {
      streetMap.update(xOffSet, yOffSet);
      streetMap.drawTiles();
   }
+  popMatrix();
   
   //Calendar code
   if (showCalendar){

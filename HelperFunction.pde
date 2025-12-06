@@ -20,30 +20,43 @@ void mouseReleased() {
 
 //detects the mouse press
 void mouseWheel(MouseEvent event) {
+  
+  float centerWorldX = (mouseX - xOffSet) / tileSize;
+  float centerWorldY = (mouseY - yOffSet) / tileSize;
+  float zoomScale;
+  
+  //update the scale with the mouse event
+  displayScale -= event.getCount() * zoomStep; // turn into a progressive function later
+  displayScale = constrain(displayScale, 0.5, 2.0);
+    
+  
+  if (displayScale >= 2.0) {
+    
+    if (streetMap.currentZoom < streetMap.maxZoom) {
+      zoomScale = 2.0;
+      streetMap.currentZoom++;
+      xOffSet = mouseX- centerWorldX * tileSize * zoomScale;
+      yOffSet = mouseY - centerWorldY * tileSize * zoomScale;
+      displayScale = 1.0;
+      streetMap.tiles.clear();
+    }
+  
+  } else if (displayScale <= 0.5) {
+    
+    if (streetMap.currentZoom > streetMap.minZoom) {
+      streetMap.currentZoom--;
+      zoomScale = 0.5;
+      xOffSet = mouseX- centerWorldX * tileSize * zoomScale;
+      yOffSet = mouseY - centerWorldY * tileSize * zoomScale;
+      displayScale = 1.0;
+      streetMap.tiles.clear();
+  
+    }
+  }
+  
+  
 
-  //️Store the old zoom
-  int oldZoom = streetMap.currentZoom;
 
-  //  Compute the world coordinates of the screen center (marker) in tile units
-  float centerWorldX = (width/2 - xOffSet) / tileSize;
-  float centerWorldY = (height/2 - yOffSet) / tileSize;
-
-  // Update zoom level
-  streetMap.currentZoom = constrain(streetMap.currentZoom - int(event.getCount()), 7, 9);
-  int newZoom = streetMap.currentZoom;
-
-  // Compute zoom scale factor (tiles double per zoom level)
-  float zoomScale = pow(2, newZoom - oldZoom);
-
-  // Recalculate offsets so the centerWorld point stays under the screen center
-  xOffSet = width/2 - centerWorldX * tileSize * zoomScale;
-  yOffSet = height/2 - centerWorldY * tileSize * zoomScale;
-
-  // 6️⃣ Clear old tiles and request new ones for the new zoom
-  streetMap.tiles.clear();
-  streetMap.update(xOffSet, yOffSet);
-
-  println("Zoom changed from " + oldZoom + " to " + newZoom);
 }
 
 
