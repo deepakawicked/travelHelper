@@ -2,18 +2,19 @@ class Tile {
   
   //fields 
   PImage tileImg;
-  int tx, ty, zoom; //tile coodernate
+  int tx, ty;//tile coodernate
   float screenX, screenY; //processing coodinates 
   boolean loaded = false;
   boolean failed = false; //replacement tiles for when the API fails to call
 
-  Tile(int x, int y, int z) { //used in the creaion of new tiles 
+  Tile(int x, int y) { //used in the creaion of new tiles 
     tx = x;
     ty = y;
-    zoom = z;
   }
 
   void update(float xOff, float yOff) {
+    
+    //println("The current tile zoom is: " + t.currentZoom);
     //add the offset from the mouseDrag into the tiles.
     //all tiles move, so it looks like a moving screen rather than one tile 
     //moving
@@ -33,10 +34,10 @@ class Tile {
     }
   }
 
-  PImage loadTileFromCache() {
+  PImage loadTileFromCache(TileMap t) {
     
     //create the path for loading rom the cache (tilestorage folder)
-    String path = sketchPath("tilestorage/" + zoom + "/" + tx + "/" + ty + ".png");
+    String path = sketchPath("tilestorage/" + t.currentZoom + "/" + this.tx + "/" + this.ty + ".png");
     
     //creates a new file. This is not a processing orginal method, but 
     //part of the oracle JAVA documentaiton 
@@ -52,9 +53,9 @@ class Tile {
     return null; //if nothing happens, do nothing until the cache/memory is requested
   }
 
-  void saveTileToCache() {
+  void saveTileToCache(TileMap t) {
     
-    String base = sketchPath("tilestorage/" + zoom + "/" + tx); //creating a folder 
+    String base = sketchPath("tilestorage/" + t.currentZoom + "/" + this.tx); //creating a folder 
     //per each zoom, and it's x value on the tile system
     File folder = new File(base); //setting a file function
     
@@ -65,12 +66,11 @@ class Tile {
     //an assigned value for the cache, set the TileImg to this
   }
 
-  PImage requestTile() { //request a tile from the server provider (API)
+  PImage requestTile(TileMap t) { //request a tile from the server provider (API)
     try { // to prevent tons of errors if there is the end of the provider,
     //try intead of hrdcoding 
-    
       //most common notation, uses the fields in it's own tile class
-      String url = "https://api.maptiler.com/maps/streets-v4/" + this.zoom + "/" + this.tx + "/" + this.ty + ".png?key=" + apiKey;
+      String url = "https://api.maptiler.com/maps/streets-v4/" + t.currentZoom + "/" + this.tx + "/" + this.ty + ".png?key=" + apiKey;
       PImage img = loadImage(url);
       tileImg = img;
       loaded = true;

@@ -20,16 +20,33 @@ void mouseReleased() {
 
 //detects the mouse press
 void mouseWheel(MouseEvent event) {
-  
-  float e = event.getCount(); //+1 or -1
-  streetMap.currentZoom = streetMap.currentZoom - int(e); 
-  streetMap.currentZoom = constrain(streetMap.currentZoom, 7, 9); //clamp
-  //the zoom to prevent too much tile requests 
-  
+
+  //️Store the old zoom
+  int oldZoom = streetMap.currentZoom;
+
+  //  Compute the world coordinates of the screen center (marker) in tile units
+  float centerWorldX = (width/2 - xOffSet) / tileSize;
+  float centerWorldY = (height/2 - yOffSet) / tileSize;
+
+  // Update zoom level
+  streetMap.currentZoom = constrain(streetMap.currentZoom - int(event.getCount()), 7, 9);
+  int newZoom = streetMap.currentZoom;
+
+  // Compute zoom scale factor (tiles double per zoom level)
+  float zoomScale = pow(2, newZoom - oldZoom);
+
+  // Recalculate offsets so the centerWorld point stays under the screen center
+  xOffSet = width/2 - centerWorldX * tileSize * zoomScale;
+  yOffSet = height/2 - centerWorldY * tileSize * zoomScale;
+
+  // 6️⃣ Clear old tiles and request new ones for the new zoom
   streetMap.tiles.clear();
-  
-  println("Current Zoom" + streetMap.currentZoom);
+  streetMap.update(xOffSet, yOffSet);
+
+  println("Zoom changed from " + oldZoom + " to " + newZoom);
 }
+
+
 
 // ------------------------- TILE FUNCTIONS -------------------------
 

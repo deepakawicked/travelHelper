@@ -60,7 +60,7 @@ class TileMap {
     for (int x = minX; x <= maxX; x++) {
       for (int y = minY; y <= maxY; y++) {
 
-        if (!tileExists(x, y, currentZoom)) spawnTile(x, y);//if it isn't loaded, create it.
+        if (!tileExists(x, y)) spawnTile(x, y);//if it isn't loaded, create it.
       }
     }
 
@@ -81,24 +81,25 @@ class TileMap {
     for (Tile t : tiles) t.drawTile(); //draw all the tiles in the list
   }
 
-  boolean tileExists(int x, int y, int zoom) { //check if the tile exists 
-    for (Tile t : tiles) {
-      if (t.tx == x && t.ty == y && t.zoom == zoom) return true; 
-      //loop through every tile checking if matchs, return true 
-      // and it doesn't need to load
-    }
+  boolean tileExists(int x, int y) {
+  for (Tile t : tiles) {
+    if (t.tx == x && t.ty == y) return true;
+  }
     return false;
   }
   
-  void spawnTile(int x, int y) {
-    
-    //create a new til
-    Tile t = new Tile(x, y, currentZoom);
+  
+ 
 
-    t.tileImg = t.loadTileFromCache();//load from the cache (the img)
+  void spawnTile(int x, int y) {
+    println("Spawning tile at: " + x + "," + y + " zoom: " + currentZoom);
+    //create a new til
+    Tile t = new Tile(x, y);
+
+    t.tileImg = t.loadTileFromCache(this);//load from the cache (the img)
     
-    if (t.tileImg == null) t.tileImg = t.requestTile(); // if there is not img, get from API
-    if (t.tileImg != null && t.loaded) t.saveTileToCache(); // if there is an image, and the image is LOADED
+    if (t.tileImg == null) t.tileImg = t.requestTile(this); // if there is not img, get from API
+    if (t.tileImg != null && t.loaded) t.saveTileToCache(this); // if there is an image, and the image is LOADED
     //save to memory 
 
     tiles.add(t); //add tile to visible tile list 
