@@ -3,7 +3,7 @@ import g4p_controls.*;
 TileMap streetMap;
 
 //fill these if needed to found
-boolean simulateMap = true;
+boolean simulateMap = false;
 String apiKey = ""; // MapTiler API key, not included in push
 
 // dragging
