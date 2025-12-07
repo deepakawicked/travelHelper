@@ -3,7 +3,7 @@ import g4p_controls.*;
 TileMap streetMap;
 
 //fill these if needed to found
-boolean simulateMap = false;
+boolean simulateMap = true;
 String apiKey = ""; // MapTiler API key, not included in push
 
 // dragging
@@ -15,6 +15,7 @@ boolean dragging;
 float displayScale = 1.0;
 float zoomStep = 0.1;
 float tileSize = 256;
+ 
 
 
 //Calendar variables
@@ -22,6 +23,9 @@ ArrayList <Event> events = new ArrayList <Event>();
 boolean showCalendar;
 PImage calendarImg;
 PFont font; 
+float routeDistance;  
+float routeDuration;  
+
 
 void setup() {
   

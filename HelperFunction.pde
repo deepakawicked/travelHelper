@@ -75,6 +75,19 @@ float latToYTile(float latval, int zoom) {
   return (1 - (log(tan(latRad) + 1 / cos(latRad)) / PI)) / 2 * pow(2, zoom);
 }
 
+
+float latLonToScreenX(float lon, int zoom) { //longtitude to screenX
+  float tileX = longToXTile(lon, zoom);
+  return tileX * tileSize + xOffSet;
+}
+
+float latLongtoScreenY(float lat, int zoom) { //latitude to screnY
+  float tileY = latToYTile(lat, zoom);
+  return tileY * tileSize + yOffSet;
+
+}
+
+
 //------------------------- CALENDAR FUNCTIONS --------------------
 void createEvent(){
     String n = "name"; //attach to location/attraction classes after
