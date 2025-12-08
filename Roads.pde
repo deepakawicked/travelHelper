@@ -21,6 +21,14 @@ void retrievePoints(ArrayList<PVector> stops) {
        
        routeDistance = routeObj.getFloat("distance"); //get the distance of the fastest path
        routeDuration = routeObj.getFloat("duration"); //get the duration of the fastest path
+       
+       JSONArray coords = routeObj.getJSONObject("geometry").getJSONArray("coordinates"); //navigate to the coodernates
+       
+       for (int i = 0; i < coords.size(); i++) {
+         JSONArray point = coords.getJSONArray(i);
+         float lon = point.getFloat(0); // first element is the longtitude 
+         float lat = point.getFloat(1); //second element is latitude 
+       }
      } 
  
    }
