@@ -76,6 +76,10 @@ public void blueslider(GSlider source, GEvent event) { //_CODE_:bvalue:247986:
   println("slider3 - GSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:bvalue:247986:
 
+public void imgButton1_click1(GImageButton source, GEvent event) { //_CODE_:imgButton1:411559:
+  println("imgButton1 - GImageButton >> GEvent." + event + " @ " + millis());
+} //_CODE_:imgButton1:411559:
+
 
 
 // Create all the GUI controls. 
@@ -207,6 +211,8 @@ public void createGUI(){
   label3.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label3.setText("Colour");
   label3.setOpaque(false);
+  imgButton1 = new GImageButton(window1, 185, 5, 150, 93, new String[] { "journeylog.png", "journeylog.png", "journeylog.png" } );
+  imgButton1.addEventHandler(this, "imgButton1_click1");
   window1.loop();
 }
 
@@ -240,3 +246,4 @@ GSlider rvalue;
 GSlider gvalue; 
 GSlider bvalue; 
 GLabel label3; 
+GImageButton imgButton1; 

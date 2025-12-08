@@ -21,7 +21,7 @@ float tileSize = 256;
 //Calendar variables
 ArrayList <Event> events = new ArrayList <Event>();
 boolean showCalendar;
-PImage calendarImg;
+PImage calendarImg, logo;
 PFont font; 
 float routeDistance;  
 float routeDuration;  
@@ -37,6 +37,9 @@ void setup() {
   imageMode(CENTER);
   calendarImg = loadImage("calendar.png");
   calendarImg.resize(250,0);
+ 
+  logo = loadImage("journeylog.png");
+  logo.resize(101,0);
   
   // Example bounding box for Ontario + Quebec
   float minLat = 41.87, maxLat = 46.95;
