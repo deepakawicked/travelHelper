@@ -1,3 +1,16 @@
+class Location {
+  String name;
+  float lat, lon;
+  float worldX, worldY
+  
+  
+
+
+
+}
+
+
+
 ////<<<<<<< Updated upstream
 ////class attractions extends location{
 ////  float rating;
@@ -57,13 +70,7 @@
 // String name;
 // PVector position;
  
-// location(String n, PVector p){
-//   this.name = n;
-//   this.position.x = (p.y + 83.5)*57;
-//   this.position.y = (-1*p.x + 48.5)*110;
-// }
- 
-//}
+
 
 
 
