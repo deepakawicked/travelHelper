@@ -57,12 +57,15 @@ class Event{
         stroke(255,0,0);
         
       }
+      
       textAlign(CENTER);
       fill(this.colour);
       rect(89, 37.48 + 30.88*(this.startTime-6), 185, this.duration*0.51467);
       
       fill(0);
       text(this.name, 181.5, 40 + 30.88*(this.startTime-6) + ((this.duration*0.51467)/2));
+      
+      if (this.endTime > 24) events.remove(this);
       
       stroke(0);
       strokeWeight(1);
