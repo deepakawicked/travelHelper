@@ -1,7 +1,7 @@
 class Location {
   String name;
   float lat, lon;
-  float worldX, worldY
+  float worldX, worldY;
   
   
 

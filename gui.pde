@@ -150,7 +150,7 @@ public void createGUI(){
   duration = new GSlider(window1, 205, 199, 100, 55, 10.0);
   duration.setShowValue(true);
   duration.setShowLimits(true);
-  duration.setLimits(1, 0, 300);
+  duration.setLimits(30, 10, 300);
   duration.setShowTicks(true);
   duration.setNumberFormat(G4P.INTEGER, 0);
   duration.setOpaque(false);

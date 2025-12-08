@@ -4,6 +4,18 @@ void mousePressed() {
   dragging = true;
   dragStartX = mouseX - xOffSet;
   dragStartY = mouseY - yOffSet;
+  
+  if (showCalendar){
+    if (89 <= mouseX && mouseX <= 274){
+      for (int i = 0; i < events.size(); i++){
+        if ((37.48 + 30.88*(events.get(i).startTime-6)) <= mouseY && mouseY <= ((37.48 + 30.88*(events.get(i).startTime-6)) + events.get(i).duration*0.51467)){
+          events.get(i).selected = true;
+        }
+        else events.get(i).selected = false;
+        
+      }
+    }
+  }
 }
 
 void mouseDragged() {
