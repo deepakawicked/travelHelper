@@ -66,15 +66,30 @@ void loadAttractions() {
 
 
 
-class location{
+class Location{
  String name;
- PVector position;
+ float lat, long
  
- location(String n, PVector p){
+ Location(String n, float lat, float lon){
    this.name = n;
-   this.position.x = (p.y + 83.5)*57;
-   this.position.y = (-1*p.x + 48.5)*110;
+   this.lat = lat;
+   this.lon = lon;
  }
+ 
+ Location(float lat, float lon) {
+ this.lat = lat;
+ this.lon = lon;
+ }
+ 
+ 
+ void update() { //scale with offset 
+ 
+ 
+ }
+ 
+ 
+ void draw() { } // draws each point the screne, constantly updaitng 
+ 
  
 }
 
