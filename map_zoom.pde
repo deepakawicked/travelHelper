@@ -57,8 +57,8 @@ void setup() {
   float startLat = (minLat + maxLat) / 2;
   float centerTileX = longToXTile(startLon, streetMap.currentZoom);
   float centerTileY = latToYTile(startLat, streetMap.currentZoom);
-  xOffSet = width/2 - centerTileX * tileSize + 512;
-  yOffSet = height/2 - centerTileY * tileSize - 256;
+  xOffSet = width/2 - centerTileX * tileSize;
+  yOffSet = height/2 - centerTileY * tileSize ;
 }
 
 void draw() {

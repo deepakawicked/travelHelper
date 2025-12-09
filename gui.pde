@@ -62,7 +62,7 @@ public void starttimelist(GDropList source, GEvent event) { //_CODE_:startTimes:
 public void mapmakerbutton(GButton source, GEvent event) { //_CODE_:mapmaker:647962:
 
  // Create locations with correct constructor
-  Location montreal = new Location(45.5017, -73.5673);  // lat, lon
+  Location montreal = new Location(42.3001, -83.0165);  // lat, lon
   Location toronto = new Location(43.6532, -79.3832);    // lat, lon
   
   ArrayList<Location> test = new ArrayList<Location>();

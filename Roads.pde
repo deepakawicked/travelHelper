@@ -21,8 +21,8 @@ class Location{
  }
  
  void update() { //scale with offset 
-   this.x = latLonToScreenX(this.lon, streetMap.currentZoom);
-   this.y = latLontoScreenY(this.lat, streetMap.currentZoom);
+   this.x = latLonToScreenX(this.lon, streetMap.currentZoom) - 128;
+   this.y = latLontoScreenY(this.lat, streetMap.currentZoom)-128;
  }
  
 
