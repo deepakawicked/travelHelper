@@ -30,7 +30,6 @@ class Location{
  
 }
 
-
 ArrayList<Location> retrievePoints(ArrayList<Location> stops) {
   
    ArrayList<Location> roadPoint = new ArrayList<Location>();

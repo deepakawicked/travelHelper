@@ -143,3 +143,5 @@ class attractions extends location {
     image(attractionMarker, this.x, this.y, 30, 30);
     text(this.name, this.x+20, this.y);
   }
+  
+}
