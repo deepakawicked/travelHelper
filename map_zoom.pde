@@ -25,6 +25,10 @@ PImage calendarImg, logo, bg, cityMarker, attractionMarker;
 PFont font; 
 float routeDistance;  
 float routeDuration; 
+String startPlace;
+String endPlace;
+Boolean drawRoad = false;
+ArrayList<Location> roadPoints;
 
 
 void setup() {
@@ -53,29 +57,32 @@ void setup() {
   float startLat = (minLat + maxLat) / 2;
   float centerTileX = longToXTile(startLon, streetMap.currentZoom);
   float centerTileY = latToYTile(startLat, streetMap.currentZoom);
-  xOffSet = width/2 - centerTileX * tileSize;
-  yOffSet = height/2 - centerTileY * tileSize;
+  xOffSet = width/2 - centerTileX * tileSize + 512;
+  yOffSet = height/2 - centerTileY * tileSize - 256;
 }
 
 void draw() {
-  background(200, 255, 200);
-  image(bg,400,400);
+  background(0);
+  
   pushMatrix();
-  translate(mouseX, mouseY );
+  translate(width/2, height/2);  // ← FIX: Scale around center
   scale(displayScale);
-  translate(-mouseX, -mouseY);
+  translate(-width/2, -height/2);
   
-  loadCity();
-  loadAttractions();
-  
-  //update tiles
+  // Update tiles
   if (simulateMap) {
      streetMap.update(xOffSet, yOffSet);
      streetMap.drawTiles();
   }
-  popMatrix();
   
-  //Calendar code
+  // Draw road INSIDE the scaled section
+  if (drawRoad && roadPoints != null) {  // ← FIX: Check for null
+    drawRoad(roadPoints);
+  }
+  
+  popMatrix();  // ← Scaling ends here
+  
+  // Calendar code (not scaled)
   if (showCalendar){
     image(calendarImg, 150, 300);
     for (int i = 0; i < events.size(); i++){
@@ -83,7 +90,15 @@ void draw() {
     }
   }
   
-  // center marker
+  // Center marker (not scaled)
   fill(255, 0, 0);
   circle(width/2, height/2, 5);
+  
+   // ADD THIS at the very end, AFTER popMatrix():
+  float mouseTileX = (mouseX - xOffSet) / tileSize;
+  float mouseTileY = (mouseY - yOffSet) / tileSize;
+  fill(0,0,0); // Yellow text
+  textSize(16);
+  text("Tile under cursor: " + nf(mouseTileX, 1, 2) + ", " + nf(mouseTileY, 1, 2), 10, height - 20);
+  
 }

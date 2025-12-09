@@ -93,7 +93,7 @@ float latLonToScreenX(float lon, int zoom) { //longtitude to screenX
   return tileX * tileSize + xOffSet;
 }
 
-float latLongtoScreenY(float lat, int zoom) { //latitude to screnY
+float latLontoScreenY(float lat, int zoom) { //latitude to screnY
   float tileY = latToYTile(lat, zoom);
   return tileY * tileSize + yOffSet;
 
