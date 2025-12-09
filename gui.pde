@@ -28,7 +28,11 @@ public void clearbutton(GButton source, GEvent event) { //_CODE_:clear:884790:
 } //_CODE_:clear:884790:
 
 public void startlist(GDropList source, GEvent event) { //_CODE_:start:737259:
-  println("start - GDropList >> GEvent." + event + " @ " + millis());
+  if (event == GEvent.SELECTED) {
+   startPlace= source.getSelectedText();
+   println("Start Selected: " + startPlace);
+  
+  }
 } //_CODE_:start:737259:
 
 public void endlist(GDropList source, GEvent event) { //_CODE_:end:696236:
@@ -56,7 +60,23 @@ public void starttimelist(GDropList source, GEvent event) { //_CODE_:startTimes:
 } //_CODE_:startTimes:262427:
 
 public void mapmakerbutton(GButton source, GEvent event) { //_CODE_:mapmaker:647962:
-  println("mapmaker - GButton >> GEvent." + event + " @ " + millis());
+
+ // Create locations with correct constructor
+  Location montreal = new Location(42.3001, -83.0165);  // lat, lon
+  Location toronto = new Location(43.6532, -79.3832);    // lat, lon
+  
+  ArrayList<Location> test = new ArrayList<Location>();
+  test.add(toronto);   // Start
+  test.add(montreal);  // End
+  
+  roadPoints = retrievePoints(test);
+  
+  if (roadPoints != null && roadPoints.size() > 0) {
+    drawRoad = true;
+    println("Road loaded with " + roadPoints.size() + " points");
+  } else {
+    println("Failed to load road");
+  }
 } //_CODE_:mapmaker:647962:
 
 public void calendarbutton(GButton source, GEvent event) { //_CODE_:calendar:693927:
