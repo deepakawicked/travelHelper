@@ -65,8 +65,8 @@ void draw() {
   scale(displayScale);
   translate(-mouseX, -mouseY);
   
-  loadCity();
-  loadAttractions();
+  //loadCity();
+  //loadAttractions();
   
   //update tiles
   if (simulateMap) {
