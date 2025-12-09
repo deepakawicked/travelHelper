@@ -21,10 +21,10 @@ float tileSize = 256;
 //Calendar variables
 ArrayList <Event> events = new ArrayList <Event>();
 boolean showCalendar;
-PImage calendarImg, logo, bg;
+PImage calendarImg, logo, bg, cityMarker, attractionMarker;
 PFont font; 
 float routeDistance;  
-float routeDuration;  
+float routeDuration; 
 
 
 void setup() {
@@ -64,6 +64,9 @@ void draw() {
   translate(mouseX, mouseY );
   scale(displayScale);
   translate(-mouseX, -mouseY);
+  
+  loadCity();
+  loadAttractions();
   
   //update tiles
   if (simulateMap) {
