@@ -56,29 +56,11 @@ void loadAttractions() {
 }
 
 
-
-class location {
-  String name;
-  float lat, lon;
-  float x, y;
-
-  location(String n, float lat, float lon) {
-    this.name = n;
-    this.lat = lat;
-    this.lon = lon;
-  }
-
-  void update() { //scale with offset
-    this.x = latLonToScreenX(this.lon, streetMap.currentZoom);
-    this.y = latLontoScreenY(this.lat, streetMap.currentZoom);
-  }
-}
-
 float startingLong, startingLat, endingLong, endingLat;
 String startingCity;
 String endingCity;
 
-class city extends location {
+class city extends Location {
   boolean getPicked = false;
 
   city(String n, float lat, float lon) {
@@ -105,7 +87,7 @@ class city extends location {
 }
 
 
-class attractions extends location {
+class attractions extends Location {
   float rating;
   String category;
   boolean inRange, food, touristHotspot, nature, museum;
