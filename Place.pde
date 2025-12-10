@@ -20,11 +20,11 @@ void loadCity() { //loads the cities and stores data
 }
 
 void loadAttractions() {
-  String[] lines = loadStrings("attractions.txt");
-  String[] attractionName = loadStrings("attraction name.txt");
-  String[] attractionRating = loadStrings("attraction rating.txt");
-  String[] attractionCategory = loadStrings("attraction category.txt");
-  String[] attractionPosition = loadStrings("attraction position.txt");
+  String[] lines = loadStrings("attraction/attractions.txt");
+  String[] attractionName = loadStrings("attraction/attraction name.txt");
+  String[] attractionRating = loadStrings("attraction/attraction rating.txt");
+  String[] attractionCategory = loadStrings("attraction/attraction category.txt");
+  String[] attractionPosition = loadStrings("attraction/attraction position.txt");
 
   for (int i = 0; i < lines.length; i++) {
 
