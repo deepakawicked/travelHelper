@@ -1,26 +1,28 @@
-ArrayList<city> cities = new ArrayList<city>();
-ArrayList<attractions> attractionList = new ArrayList<attractions>();
-
-
 void loadCity() {
+  //String[] cityLines = loadStrings("city.txt");
   String[] citynames = loadStrings("city name.txt");
   String[] citypos = loadStrings("city position.txt");
 
   for (int i = 0; i < citypos.length; i++) {
+    //String currLine = cityLines[i];
+    //String[] parts = currLine.split("\\s+");
 
-    String cityName = citynames[i];
+    //String cityName = parts[0];
+    String cityName = citypos[i];
+    //String cityPos = parts[1];
+    //String[] coordStrings = parts[parts.length - 1].split(",");
+
     String coordStrings = citypos[i];
     String[] cityLonLat = coordStrings.split(", ");
     float lat = float(cityLonLat[0]);
     float lon = float(cityLonLat[1]);
 
     city c = new city(cityName, lat, lon);
-    cities.add(c);
-    //c.checkPicked();
-    //c.update();
-    //if (c.getPicked == true) {
-    //  c.showOnMap();
-    //}
+    c.checkPicked();
+    c.update();
+    if (c.getPicked() == true) {
+      c.showMap();
+    }
   }
 }
 
@@ -44,8 +46,7 @@ void loadAttractions() {
     float lon = float(coord[1]);
 
     attractions a = new attractions(name, rating, lat, lon, category);
-
-    attractionList.add(a);    a.checkInRange();
+    a.checkInRange();
     a.update();
 
     if (a.inRange == true) {
@@ -70,7 +71,7 @@ class location {
 
   void update() { //scale with offset
     this.x = latLonToScreenX(this.lon, streetMap.currentZoom);
-    this.y = latLontoScreenY(this.lat, streetMap.currentZoom);
+    this.y = latLongtoScreenY(this.lat, streetMap.currentZoom);
   }
 }
 
@@ -142,5 +143,3 @@ class attractions extends location {
     image(attractionMarker, this.x, this.y, 30, 30);
     text(this.name, this.x+20, this.y);
   }
-  
-}

@@ -59,6 +59,9 @@ void setup() {
   float centerTileY = latToYTile(startLat, streetMap.currentZoom);
   xOffSet = width/2 - centerTileX * tileSize;
   yOffSet = height/2 - centerTileY * tileSize ;
+  
+  loadCity();
+  loadAttractions();
 }
 
 void draw() {
@@ -81,6 +84,23 @@ void draw() {
   }
   
   popMatrix();  // ← Scaling ends here
+  
+  for (city c : cities) {
+    c.checkPicked();
+    c.update();
+    if (c.getPicked == true) {     // ⚠️ getPicked 是方法要带 ()
+      c.showOnMap();
+    }
+  }
+  for (attractions a : attractionList) {
+    a.checkInRange();
+    a.update();
+
+    if (a.inRange) {
+      a.checkCategory();
+      a.showOnMap();
+    }
+  }
   
   // Calendar code (not scaled)
   if (showCalendar){
