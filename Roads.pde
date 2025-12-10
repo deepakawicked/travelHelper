@@ -1,38 +1,43 @@
 class Location{
  String name;
- float lat, lon;
- float x, y;
+ float lat, lon, x, y, targetX, targetY;
  
  Location(String n, float lat, float lon){
    this.name = n;
    this.lat = lat;
    this.lon = lon;
-   
-   
+   updateTargets();
+   this.x = targetX;
+   this.y = targetY;
  }
  
- Location(float lat, float lon) { //other constructor for points 
+ Location(float lat, float lon) { 
    this.lat = lat;
    this.lon = lon;
-    
-   
+   updateTargets();
+   this.x = targetX;
+   this.y = targetY;
  }
  
- void update() { //scale with offset 
-   this.x = latLonToScreenX(this.lon, streetMap.currentZoom) - 128;
-   this.y = latLontoScreenY(this.lat, streetMap.currentZoom)-128;
+ void updateTargets() {
+   targetX = latLonToScreenX(lon, streetMap.currentZoom) - 128;
+   targetY = latLontoScreenY(lat, streetMap.currentZoom) - 128;
  }
  
-
- 
- 
+ void update() {
+   updateTargets();
+   x += (targetX - x) * 0.25;
+   y += (targetY - y) * 0.25;
+ }
 }
 
+float roadAnimProgress = 0;
+boolean roadAnimating = false;
+
 ArrayList<Location> retrievePoints(ArrayList<Location> stops) {
-  
    ArrayList<Location> roadPoint = new ArrayList<Location>();
    String coordsRequested = "";
-
+   
    for (int i = 0; i < stops.size(); i++) {
      Location c = stops.get(i);
      coordsRequested += c.lon + "," + c.lat;
@@ -41,56 +46,49 @@ ArrayList<Location> retrievePoints(ArrayList<Location> stops) {
    
    String url = String.format("http://router.project-osrm.org/route/v1/driving/%s?overview=full&geometries=geojson", coordsRequested);
    
-   
    try {
-     
      JSONObject routeData = loadJSONObject(url);
-     
-     if (routeData!= null && routeData.getString("code").equals("Ok")) {
+     if (routeData != null && routeData.getString("code").equals("Ok")) {
        JSONObject routeObj = routeData.getJSONArray("routes").getJSONObject(0);
+       routeDistance = routeObj.getFloat("distance");
+       routeDuration = routeObj.getFloat("duration");
        
-       routeDistance = routeObj.getFloat("distance"); //get the distance of the fastest path
-       routeDuration = routeObj.getFloat("duration"); //get the duration of the fastest path
+       JSONArray coords = routeObj.getJSONObject("geometry").getJSONArray("coordinates");
+       println("Fetching " + coords.size() + " road points");
        
-       JSONArray coords = routeObj.getJSONObject("geometry").getJSONArray("coordinates"); //navigate to the coodernates
-       println("Fetching points..." + coords.size() + " found!");
        for (int i = 0; i < coords.size(); i++) { 
-         JSONArray pointData = coords.getJSONArray(i);
-         float lon = pointData.getFloat(0); // first element is the longtitude 
-         float lat = pointData.getFloat(1); //second element is latitude 
-         Location point = new Location(lat, lon);
-         roadPoint.add(point);
-         
-         
+         JSONArray pt = coords.getJSONArray(i);
+         roadPoint.add(new Location(pt.getFloat(1), pt.getFloat(0)));
        }
-     } 
-     
-    
+       
+       roadAnimProgress = 0;
+       roadAnimating = true;
+     }
      return roadPoint;
- 
-   }
-   
-   catch (Exception e) {
-     println("Unable to Load RouteData from ORSM" + e.getMessage());
+   } catch (Exception e) {
+     println("OSRM error: " + e.getMessage());
      return null;
-   
    }
-   
 }
 
 void drawRoad(ArrayList<Location> places) {
-  stroke(255, 0, 0);  // Red so you can see it
-  strokeWeight(4 / displayScale);  // ← FIX: Account for scale
+  if (places == null || places.isEmpty()) return;
+  
+  if (roadAnimating) {
+    roadAnimProgress = min(roadAnimProgress + 0.02, 1.0);
+    if (roadAnimProgress >= 1.0) roadAnimating = false;
+  }
+  
+  int numPoints = constrain((int)(places.size() * roadAnimProgress), 2, places.size());
+  
+  stroke(50, 150, 255, 200);
+  strokeWeight(4 / displayScale);
   noFill();
   
-  beginShape();  // ← Better way to draw continuous line
-  for (Location loc : places) {
-    loc.update();
-    vertex(loc.x, loc.y);
+  beginShape();
+  for (int i = 0; i < numPoints; i++) {
+    places.get(i).update();
+    vertex(places.get(i).x, places.get(i).y);
   }
   endShape();
-  
-println("Current map zoom: " + streetMap.currentZoom);
-println("Tile at Toronto should be: " + longToXTile(-79.3832, streetMap.currentZoom) + ", " + latToYTile(43.6532, streetMap.currentZoom));
-  
 }

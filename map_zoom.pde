@@ -31,7 +31,7 @@ ArrayList<Location> roadPoints;
 
 
 void setup() {
-  
+  frameRate(30);
   createGUI();
   size(800, 800);
   font = createFont("Times New Roman", 15);
@@ -64,25 +64,24 @@ void setup() {
 }
 
 void draw() {
-  background(0);
+  background(205, 231, 197);
   
   pushMatrix();
   translate(width/2, height/2);  // ← FIX: Scale around center
   scale(displayScale);
   translate(-width/2, -height/2);
   
-  // Update tiles
+
   if (simulateMap) {
      streetMap.update(xOffSet, yOffSet);
      streetMap.drawTiles();
   }
   
-  // Draw road INSIDE the scaled section
   if (drawRoad && roadPoints != null) {  // ← FIX: Check for null
     drawRoad(roadPoints);
   }
   
-  popMatrix();  // ← Scaling ends here
+  popMatrix();  
   
 
   for (attractions a : attractionList) {
@@ -94,8 +93,7 @@ void draw() {
       a.showOnMap();
     }
   }
-  
-  // Calendar code (not scaled)
+
   if (showCalendar){
     image(calendarImg, 150, 300);
     for (int i = 0; i < events.size(); i++){
@@ -103,11 +101,7 @@ void draw() {
     }
   }
   
-  // Center marker (not scaled)
-  fill(255, 0, 0);
-  circle(width/2, height/2, 5);
   
-   // ADD THIS at the very end, AFTER popMatrix():
   float mouseTileX = (mouseX - xOffSet) / tileSize;
   float mouseTileY = (mouseY - yOffSet) / tileSize;
   fill(0,0,0); // Yellow text
