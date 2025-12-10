@@ -1,5 +1,3 @@
-
-
 class Location{
  String name;
  float lat, lon;

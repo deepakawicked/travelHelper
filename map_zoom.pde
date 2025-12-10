@@ -2,92 +2,123 @@ import g4p_controls.*;
 
 TileMap streetMap;
 
-// Simulation and API
+//fill these if needed to found
 boolean simulateMap = true;
-String apiKey = "8N3PDuIB3twtbBgKkj4B"; // MapTiler API key
+String apiKey = ""; // MapTiler API key, not included in push
 
-// Dragging
+// dragging
 float xOffSet, yOffSet;
 float dragStartX, dragStartY;
 boolean dragging;
 
-// Zoom
+// slow scroll zoom
 float displayScale = 1.0;
 float zoomStep = 0.1;
 float tileSize = 256;
+ 
 
-// Calendar variables (untouched)
-ArrayList<Event> events = new ArrayList<Event>();
+
+//Calendar variables
+ArrayList <Event> events = new ArrayList <Event>();
 boolean showCalendar;
 PImage calendarImg, logo, bg, cityMarker, attractionMarker;
-PFont font;
-float routeDistance, routeDuration;
-String startPlace, endPlace;
-boolean drawRoad = false;
+PFont font; 
+float routeDistance;  
+float routeDuration; 
+String startPlace;
+String endPlace;
+Boolean drawRoad = false;
 ArrayList<Location> roadPoints;
 
+
 void setup() {
+  
   createGUI();
   size(800, 800);
   font = createFont("Times New Roman", 15);
-
-  // Calendar image
+  
+  //calendar image
   imageMode(CENTER);
   calendarImg = loadImage("calendar.png");
-  calendarImg.resize(250, 0);
-
+  calendarImg.resize(250,0);
+ 
   logo = loadImage("journeylog.png");
   bg = loadImage("background.png");
-
-  // Bounding box for Ontario + Quebec
+  
+  // Example bounding box for Ontario + Quebec
   float minLat = 41.87, maxLat = 46.95;
   float minLon = -83.051, maxLon = -70.928;
+  
+  //feeding into the stretmap
+  streetMap = new TileMap(minLat, maxLat, minLon, maxLon, 7, 6, 10);
 
-  // Initialize TileMap
-  streetMap = new TileMap(minLat, maxLat, minLon, maxLon, 7, 7, 9);
-
-  // Center the map
+  // center offsets at start
   float startLon = (minLon + maxLon) / 2;
   float startLat = (minLat + maxLat) / 2;
-  xOffSet = width/2 - longToXTile(startLon, streetMap.currentZoom) * tileSize;
-  yOffSet = height/2 - latToYTile(startLat, streetMap.currentZoom) * tileSize;
+  float centerTileX = longToXTile(startLon, streetMap.currentZoom);
+  float centerTileY = latToYTile(startLat, streetMap.currentZoom);
+  xOffSet = width/2 - centerTileX * tileSize;
+  yOffSet = height/2 - centerTileY * tileSize ;
+  
+  loadCity();
+  loadAttractions();
 }
 
 void draw() {
   background(0);
-
+  
   pushMatrix();
-
-  // Apply scaling based on displayScale
-  translate(mouseX , mouseY);
+  translate(width/2, height/2);  // ← FIX: Scale around center
   scale(displayScale);
-  translate(-mouseX , -mouseY);
-
-  // Draw tiles normally using offsets
+  translate(-width/2, -height/2);
+  
+  // Update tiles
   if (simulateMap) {
-    streetMap.update(xOffSet, yOffSet);
-    streetMap.drawTiles();
+     streetMap.update(xOffSet, yOffSet);
+     streetMap.drawTiles();
   }
-
-  // Draw road if any
-  if (drawRoad && roadPoints != null) {
+  
+  // Draw road INSIDE the scaled section
+  if (drawRoad && roadPoints != null) {  // ← FIX: Check for null
     drawRoad(roadPoints);
   }
+  
+  popMatrix();  // ← Scaling ends here
+  
+  for (city c : cities) {
+    c.checkPicked();
+    c.update();
+    if (c.getPicked == true) {     // ⚠️ getPicked 是方法要带 ()
+      c.showOnMap();
+    }
+  }
+  for (attractions a : attractionList) {
+    a.checkInRange();
+    a.update();
 
-  popMatrix();
-
-
+    if (a.inRange) {
+      a.checkCategory();
+      a.showOnMap();
+    }
+  }
+  
+  // Calendar code (not scaled)
   if (showCalendar){
     image(calendarImg, 150, 300);
     for (int i = 0; i < events.size(); i++){
       events.get(i).drawEvent();
     }
   }
-
-  // Mouse tile under cursor
+  
+  // Center marker (not scaled)
+  fill(255, 0, 0);
+  circle(width/2, height/2, 5);
+  
+   // ADD THIS at the very end, AFTER popMatrix():
   float mouseTileX = (mouseX - xOffSet) / tileSize;
   float mouseTileY = (mouseY - yOffSet) / tileSize;
-  fill(0, 0, 0);
+  fill(0,0,0); // Yellow text
   textSize(16);
   text("Tile under cursor: " + nf(mouseTileX, 1, 2) + ", " + nf(mouseTileY, 1, 2), 10, height - 20);
+  
 }
