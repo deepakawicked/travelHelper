@@ -29,15 +29,33 @@ public void clearbutton(GButton source, GEvent event) { //_CODE_:clear:884790:
 
 public void startlist(GDropList source, GEvent event) { //_CODE_:start:737259:
   if (event == GEvent.SELECTED) {
-   startPlace= source.getSelectedText();
-   println("Start Selected: " + startPlace);
+   String selectedStart =  source.getSelectedText();
+   
+   for (City a: cityList) {
+     if (a.name.equals(selectedStart)) {
+        startCity = a;
+     }
+     }
+     
+     println("Start City is", startCity.name);
+   }
   
-  }
-} //_CODE_:start:737259:
+  } //_CODE_:start:737259:
 
 public void endlist(GDropList source, GEvent event) { //_CODE_:end:696236:
-  println("end - GDropList >> GEvent." + event + " @ " + millis());
-} //_CODE_:end:696236:
+    if (event == GEvent.SELECTED) {
+   String selectedEnd =  source.getSelectedText();
+   
+   for (City a: cityList) {
+     if (a.name.equals(selectedEnd)) {
+        endCity = a;
+     }
+     }
+     
+     println("Start City is", endCity.name);
+   }
+  
+  } //_CODE_:end:696236:
 
 public void categorylist(GDropList source, GEvent event) { //_CODE_:category:612875:
   println("category - GDropList >> GEvent." + event + " @ " + millis());
@@ -60,24 +78,29 @@ public void starttimelist(GDropList source, GEvent event) { //_CODE_:startTimes:
 } //_CODE_:startTimes:262427:
 
 public void mapmakerbutton(GButton source, GEvent event) { //_CODE_:mapmaker:647962:
-
+ ArrayList<Location> test = new ArrayList<Location>();
  // Create locations with correct constructor
-  Location montreal = new Location(42.3001, -83.0165);  // lat, lon
-  Location toronto = new Location(43.6532, -79.3832);    // lat, lon
-  
-  ArrayList<Location> test = new ArrayList<Location>();
-  test.add(toronto);   // Start
-  test.add(montreal);  // End
-  
-  roadPoints = retrievePoints(test);
-  
-  if (roadPoints != null && roadPoints.size() > 0) {
+  if (startCity != null && endCity != null) {
+    
+    test.add(startCity);
+    test.add(endCity);
+    
+    roadPoints = retrievePoints(test);
+    
+    if (roadPoints != null && roadPoints.size() > 0) {
     drawRoad = true;
     println("Road loaded with " + roadPoints.size() + " points");
   } else {
     println("Failed to load road");
   }
-} //_CODE_:mapmaker:647962:
+  
+    
+  }
+  
+  
+  
+  
+ } //_CODE_:mapmaker:647962:
 
 public void calendarbutton(GButton source, GEvent event) { //_CODE_:calendar:693927:
   if (showCalendar) showCalendar = false;

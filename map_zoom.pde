@@ -25,8 +25,7 @@ PImage calendarImg, logo, bg, cityMarker, attractionMarker;
 PFont font; 
 float routeDistance;  
 float routeDuration; 
-String startPlace;
-String endPlace;
+City startCity, endCity;
 Boolean drawRoad = false;
 ArrayList<Location> roadPoints;
 
@@ -50,7 +49,7 @@ void setup() {
   float minLon = -83.051, maxLon = -70.928;
   
   //feeding into the stretmap
-  streetMap = new TileMap(minLat, maxLat, minLon, maxLon, 7, 6, 10);
+  streetMap = new TileMap(minLat, maxLat, minLon, maxLon, 7, 7, 9);
 
   // center offsets at start
   float startLon = (minLon + maxLon) / 2;
@@ -85,13 +84,7 @@ void draw() {
   
   popMatrix();  // ← Scaling ends here
   
-  for (city c : cities) {
-    c.checkPicked();
-    c.update();
-    if (c.getPicked == true) {     // ⚠️ getPicked 是方法要带 ()
-      c.showOnMap();
-    }
-  }
+
   for (attractions a : attractionList) {
     a.checkInRange();
     a.update();

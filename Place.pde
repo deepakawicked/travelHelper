@@ -1,27 +1,22 @@
-ArrayList<city> cities = new ArrayList<city>();
 ArrayList<attractions> attractionList = new ArrayList<attractions>();
+ArrayList<City> cityList = new ArrayList<City>();
 
-
-void loadCity() {
-  String[] citynames = loadStrings("city name.txt");
-  String[] citypos = loadStrings("city position.txt");
-
-  for (int i = 0; i < citypos.length; i++) {
-
-    String cityName = citynames[i];
-    String coordStrings = citypos[i];
-    String[] cityLonLat = coordStrings.split(", ");
-    float lat = float(cityLonLat[0]);
-    float lon = float(cityLonLat[1]);
-
-    city c = new city(cityName, lat, lon);
-    cities.add(c);
-    //c.checkPicked();
-    //c.update();
-    //if (c.getPicked == true) {
-    //  c.showOnMap();
-    //}
+void loadCity() { //loads the cities and stores data 
+  String[] cityData  = loadStrings("city.txt");
+  
+  for(int i = 0; i < cityData.length; i++) {
+     String currentString = cityData[i];
+     String[] listData = split(currentString, ",");
+     String cityName = listData[0].trim();
+     float cityLat = float(listData[1].trim());
+     float cityLong = float(listData[2].trim());
+     
+     
+     City newCity = new City(cityName, cityLat, cityLong);
+     cityList.add(newCity);
+     
   }
+
 }
 
 void loadAttractions() {
@@ -60,10 +55,10 @@ float startingLong, startingLat, endingLong, endingLat;
 String startingCity;
 String endingCity;
 
-class city extends Location {
+class City extends Location {
   boolean getPicked = false;
 
-  city(String n, float lat, float lon) {
+  City(String n, float lat, float lon) {
     super(n, lat, lon);
   }
 
