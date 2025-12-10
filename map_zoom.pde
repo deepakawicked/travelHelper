@@ -44,6 +44,7 @@ void setup() {
   logo = loadImage("journeylog.png");
   bg = loadImage("background.png");
   
+  
   // Example bounding box for Ontario + Quebec
   float minLat = 41.87, maxLat = 46.95;
   float minLon = -83.051, maxLon = -70.928;
@@ -89,11 +90,19 @@ void draw() {
     a.update();
 
     if (a.inRange) {
-      a.checkCategory();
-      a.showOnMap();
+      if (a.category.equals(category.getSelectedText())){
+        if (a.rating >= stars.getValueI()){          
+          if (a.category.equals("Food")){
+          if(a.budget == budget.getValueI()){
+            a.showOnMap();
+          }
+        }
+        else a.showOnMap();
+        }
+      
+      }
     }
   }
-
   if (showCalendar){
     image(calendarImg, 150, 300);
     for (int i = 0; i < events.size(); i++){

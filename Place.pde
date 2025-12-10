@@ -24,6 +24,7 @@ void loadAttractions() {
   String[] attractionName = loadStrings("attraction/attraction name.txt");
   String[] attractionRating = loadStrings("attraction/attraction rating.txt");
   String[] attractionCategory = loadStrings("attraction/attraction category.txt");
+  String[] attractionBudget = loadStrings("attraction/attraction price.txt");
   String[] attractionPosition = loadStrings("attraction/attraction position.txt");
 
   for (int i = 0; i < lines.length; i++) {
@@ -31,14 +32,20 @@ void loadAttractions() {
     String name = attractionName[i];
     float rating = float(attractionRating[i]);
     String category = attractionCategory[i];
+    String budgetText = attractionBudget[i]; 
     String pos = attractionPosition[i];
 
     String[] coord = pos.split(", ");
-
+    
     float lat = float(coord[0]);
     float lon = float(coord[1]);
-
-    attractions a = new attractions(name, rating, lat, lon, category);
+    
+    int budget = 0;
+    if (budgetText.equals("$")) budget = 1;
+    else if (budgetText.equals("$$")) budget = 2;
+    else budget = 3;
+    
+    attractions a = new attractions(name, rating, lat, lon, category, budget);
 
     attractionList.add(a);    a.checkInRange();
     a.update();
@@ -75,31 +82,38 @@ class City extends Location {
   }
 
   void showOnMap() {
+    println("hello");
     cityMarker = loadImage("cityMarker.png");
     image(cityMarker, this.x, this.y, 30, 30);
+    textFont(font);
+    textAlign(CENTER);
+    fill(255);
     text(this.name, this.x+20, this.y);
   }
 }
 
 
 class attractions extends Location {
+  int budget;
   float rating;
   String category;
   boolean inRange, food, touristHotspot, nature, museum;
 
-  attractions(String n, float r, float lat, float lon, String c) {
+  attractions(String n, float r, float lat, float lon, String c, int b) {
     super(n, lat, lon);
     this.rating = r;
     this.category = c;
+    this.budget = b;
     this.inRange = false;
   }
 
   void checkInRange() {
-    if (startingLong - 1 < this.lon && this.lon < endingLong + 1 ||endingLong - 1 < this.lon && this.lon < startingLong + 1) {
-      if (startingLat - 1 < this.lat && this.lat < endingLat + 1 || endingLat - 1 < this.lat && this.lat < startingLat) {
-        this.inRange = true;
-      }
-    }
+    //if (startingLong - 1 < this.lon && this.lon < endingLong + 1 ||endingLong - 1 < this.lon && this.lon < startingLong + 1) {
+    //  if (startingLat - 1 < this.lat && this.lat < endingLat + 1 || endingLat - 1 < this.lat && this.lat < startingLat) {
+    //    this.inRange = true;
+    //  }
+    //}
+    this.inRange = true;
   }
 
   void checkCategory() {

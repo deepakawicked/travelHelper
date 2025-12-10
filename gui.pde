@@ -189,9 +189,9 @@ public void createGUI(){
   budget.addEventHandler(this, "budgetslider");
   stars = new GCustomSlider(window1, 16, 406, 100, 64, "red_yellow18px");
   stars.setShowValue(true);
-  stars.setLimits(1, 0, 10);
+  stars.setLimits(1.0, 0.0, 10.0);
   stars.setShowTicks(true);
-  stars.setNumberFormat(G4P.INTEGER, 0);
+  stars.setNumberFormat(G4P.DECIMAL, 1);
   stars.setOpaque(false);
   stars.addEventHandler(this, "starsslider");
   duration = new GSlider(window1, 205, 199, 100, 55, 10.0);
