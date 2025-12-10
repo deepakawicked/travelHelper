@@ -1,147 +1,147 @@
-void loadCity() {
-  //String[] cityLines = loadStrings("city.txt");
-  //String[] citynames = loadStrings("city name.txt");
-  String[] citypos = loadStrings("city position.txt");
+//void loadCity() {
+//  //String[] cityLines = loadStrings("city.txt");
+//  //String[] citynames = loadStrings("city name.txt");
+//  String[] citypos = loadStrings("city position.txt");
 
-  for (int i = 0; i < citypos.length; i++) {
-    //String currLine = cityLines[i];
-    //String[] parts = currLine.split("\\s+");
+//  for (int i = 0; i < citypos.length; i++) {
+//    //String currLine = cityLines[i];
+//    //String[] parts = currLine.split("\\s+");
 
-    //String cityName = parts[0];
-    String cityName = citypos[i];
-    //String cityPos = parts[1];
-    //String[] coordStrings = parts[parts.length - 1].split(",");
+//    //String cityName = parts[0];
+//    String cityName = citypos[i];
+//    //String cityPos = parts[1];
+//    //String[] coordStrings = parts[parts.length - 1].split(",");
 
-    String coordStrings = citypos[i];
-    String[] cityLonLat = coordStrings.split(", ");
-    float lat = float(cityLonLat[0]);
-    float lon = float(cityLonLat[1]);
+//    String coordStrings = citypos[i];
+//    String[] cityLonLat = coordStrings.split(", ");
+//    float lat = float(cityLonLat[0]);
+//    float lon = float(cityLonLat[1]);
 
-    city c = new city(cityName, lat, lon);
-    c.checkPicked();
-    c.update();
-    if (c.getPicked() == true) {
-      c.showMap();
-    }
-  }
-}
+//    city c = new city(cityName, lat, lon);
+//    c.checkPicked();
+//    c.update();
+//    if (c.getPicked() == true) {
+//      c.showMap();
+//    }
+//  }
+//}
 
-void loadAttractions() {
-  String[] lines = loadStrings("attractions.txt");
-  String[] attractionName = loadStrings("attraction name.txt");
-  String[] attractionRating = loadStrings("attraction rating.txt");
-  String[] attractionCategory = loadStrings("attraction category.txt");
-  String[] attractionPosition = loadStrings("attraction position.txt");
+//void loadAttractions() {
+//  String[] lines = loadStrings("attractions.txt");
+//  String[] attractionName = loadStrings("attraction name.txt");
+//  String[] attractionRating = loadStrings("attraction rating.txt");
+//  String[] attractionCategory = loadStrings("attraction category.txt");
+//  String[] attractionPosition = loadStrings("attraction position.txt");
 
-  for (int i = 0; i < lines.length; i++) {
+//  for (int i = 0; i < lines.length; i++) {
 
-    String name = attractionName[i];
-    float rating = float(attractionRating[i]);
-    String category = attractionCategory[i];
-    String pos = attractionPosition[i];
+//    String name = attractionName[i];
+//    float rating = float(attractionRating[i]);
+//    String category = attractionCategory[i];
+//    String pos = attractionPosition[i];
 
-    String[] coord = pos.split(", ");
+//    String[] coord = pos.split(", ");
 
-    float lat = float(coord[0]);
-    float lon = float(coord[1]);
+//    float lat = float(coord[0]);
+//    float lon = float(coord[1]);
 
-    attractions a = new attractions(name, rating, lat, lon, category);
-    a.checkInRange();
-    a.update();
+//    attractions a = new attractions(name, rating, lat, lon, category);
+//    a.checkInRange();
+//    a.update();
 
-    if (a.inRange == true) {
-      a.checkCategory();
-      a.showOnMap();
-    }
-  }
-}
-
-
-
-class location {
-  String name;
-  float lat, lon;
-  float x, y;
-
-  location(String n, float lat, float lon) {
-    this.name = n;
-    this.lat = lat;
-    this.lon = lon;
-  }
-
-  void update() { //scale with offset
-    this.x = latLonToScreenX(this.lon, streetMap.currentZoom);
-    this.y = latLongtoScreenY(this.lat, streetMap.currentZoom);
-  }
-}
-
-float startingLong, startingLat, endingLong, endingLat;
-String startingCity;
-String endingCity;
-
-class city extends location {
-  boolean getPicked = false;
-
-  city(String n, float lat, float lon) {
-    super(n, lat, lon);
-  }
-
-  void checkPicked() {
-    if (this.name.equals(startingCity)) {
-      this.getPicked = true;
-      startingLong = this.lon;
-      startingLat = this.lat;
-    } else if (this.name.equals(endingCity)) {
-      this.getPicked = true;
-      endingLat = this.lat;
-      endingLong = this.lon;
-    }
-  }
-
-  void showOnMap() {
-    cityMarker = loadImage("cityMarker.png");
-    image(cityMarker, this.x, this.y, 30, 30);
-    text(this.name, this.x+20, this.y);
-  }
-}
+//    if (a.inRange == true) {
+//      a.checkCategory();
+//      a.showOnMap();
+//    }
+//  }
+//}
 
 
-class attractions extends location {
-  float rating;
-  String category;
-  boolean inRange, food, touristHotspot, nature, museum;
 
-  attractions(String n, float r, float lat, float lon, String c) {
-    super(n, lat, lon);
-    this.rating = r;
-    this.category = c;
-    this.inRange = false;
-  }
+//class location {
+//  String name;
+//  float lat, lon;
+//  float x, y;
 
-  void checkInRange() {
-    if (startingLong - 1 < this.lon && this.lon < endingLong + 1 ||endingLong - 1 < this.lon && this.lon < startingLong + 1) {
-      if (startingLat - 1 < this.lat && this.lat < endingLat + 1 || endingLat - 1 < this.lat && this.lat < startingLat) {
-        this.inRange = true;
-      }
-    }
-  }
+//  location(String n, float lat, float lon) {
+//    this.name = n;
+//    this.lat = lat;
+//    this.lon = lon;
+//  }
 
-  void checkCategory() {
-    if (this.category == "food") {
-      this.food = true;
-    } else if (this.category == "touristHotspot") {
-      this.touristHotspot = true;
-    } else if (this.category == "nature") {
-      this.nature = true;
-    } else {
-      this.museum = true;
-    }
-  }
+//  void update() { //scale with offset
+//    this.x = latLonToScreenX(this.lon, streetMap.currentZoom);
+//    this.y = latLongtoScreenY(this.lat, streetMap.currentZoom);
+//  }
+//}
 
-  void showOnMap() {
-    attractionMarker = loadImage("attractionMarker.png");
-    image(attractionMarker, this.x, this.y, 30, 30);
-    text(this.name, this.x+20, this.y);
-  }
+//float startingLong, startingLat, endingLong, endingLat;
+//String startingCity;
+//String endingCity;
+
+//class city extends location {
+//  boolean getPicked = false;
+
+//  city(String n, float lat, float lon) {
+//    super(n, lat, lon);
+//  }
+
+//  void checkPicked() {
+//    if (this.name.equals(startingCity)) {
+//      this.getPicked = true;
+//      startingLong = this.lon;
+//      startingLat = this.lat;
+//    } else if (this.name.equals(endingCity)) {
+//      this.getPicked = true;
+//      endingLat = this.lat;
+//      endingLong = this.lon;
+//    }
+//  }
+
+//  void showOnMap() {
+//    cityMarker = loadImage("cityMarker.png");
+//    image(cityMarker, this.x, this.y, 30, 30);
+//    text(this.name, this.x+20, this.y);
+//  }
+//}
+
+
+//class attractions extends location {
+//  float rating;
+//  String category;
+//  boolean inRange, food, touristHotspot, nature, museum;
+
+//  attractions(String n, float r, float lat, float lon, String c) {
+//    super(n, lat, lon);
+//    this.rating = r;
+//    this.category = c;
+//    this.inRange = false;
+//  }
+
+//  void checkInRange() {
+//    if (startingLong - 1 < this.lon && this.lon < endingLong + 1 ||endingLong - 1 < this.lon && this.lon < startingLong + 1) {
+//      if (startingLat - 1 < this.lat && this.lat < endingLat + 1 || endingLat - 1 < this.lat && this.lat < startingLat) {
+//        this.inRange = true;
+//      }
+//    }
+//  }
+
+//  void checkCategory() {
+//    if (this.category == "food") {
+//      this.food = true;
+//    } else if (this.category == "touristHotspot") {
+//      this.touristHotspot = true;
+//    } else if (this.category == "nature") {
+//      this.nature = true;
+//    } else {
+//      this.museum = true;
+//    }
+//  }
+
+//  void showOnMap() {
+//    attractionMarker = loadImage("attractionMarker.png");
+//    image(attractionMarker, this.x, this.y, 30, 30);
+//    text(this.name, this.x+20, this.y);
+//  }
   
-}
+//}
