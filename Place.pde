@@ -26,14 +26,13 @@ void loadCity() {
 void loadAttractions() {
   //load the attractions and store the data
   
-  String[] lines = loadStrings("attraction/attractions.txt");
   String[] attractionName = loadStrings("attraction/attraction name.txt");
   String[] attractionRating = loadStrings("attraction/attraction rating.txt");
   String[] attractionCategory = loadStrings("attraction/attraction category.txt");
   String[] attractionBudget = loadStrings("attraction/attraction price.txt");
   String[] attractionPosition = loadStrings("attraction/attraction position.txt");
 
-  for (int i = 0; i < lines.length; i++) {
+  for (int i = 0; i < attractionName.length; i++) {
 
     String name = attractionName[i];
     float rating = float(attractionRating[i]);
