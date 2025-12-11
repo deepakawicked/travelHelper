@@ -3,7 +3,6 @@ void mousePressed() {
   dragging = true;
   dragStartX = mouseX - xOffSet;
   dragStartY = mouseY - yOffSet;
-
   if (showCalendar){
     if (89 <= mouseX && mouseX <= 274){
       for (int i = 0; i < events.size(); i++){
@@ -19,15 +18,26 @@ void mouseDragged() {
   if (dragging) {
     xOffSet = mouseX - dragStartX;
     yOffSet = mouseY - dragStartY;
-
-    // Clamp panning to prevent moving beyond map bounds
-    float minX = -longToXTile(streetMap.minLon, streetMap.currentZoom) * tileSize;
-    float maxX = width - longToXTile(streetMap.maxLon, streetMap.currentZoom) * tileSize;
-    float minY = -latToYTile(streetMap.maxLat, streetMap.currentZoom) * tileSize;
-    float maxY = height - latToYTile(streetMap.minLat, streetMap.currentZoom) * tileSize;
-
-    xOffSet = constrain(xOffSet, maxX, minX);
-    yOffSet = constrain(yOffSet, maxY, minY);
+    
+    float mapL = longToXTile(streetMap.minLon, streetMap.currentZoom) * tileSize;
+    float mapR = longToXTile(streetMap.maxLon, streetMap.currentZoom) * tileSize;
+    float mapT = latToYTile(streetMap.maxLat, streetMap.currentZoom) * tileSize;
+    float mapB = latToYTile(streetMap.minLat, streetMap.currentZoom) * tileSize;
+    
+    float mapW = mapR - mapL;
+    float mapH = mapB - mapT;
+    
+    // Add padding so edges can reach screen edges
+    float padX = width * 0.2;
+    float padY = height * 0.2;
+    
+    if (mapW > width) {
+      xOffSet = constrain(xOffSet, width - mapR - padX, -mapL + padX);
+    }
+    
+    if (mapH > height) {
+      yOffSet = constrain(yOffSet, height - mapB - padY, -mapT + padY);
+    }
   }
 }
 
@@ -38,10 +48,14 @@ void mouseReleased() {
 void mouseWheel(MouseEvent event) {
   float mouseWorldX = (mouseX - xOffSet) / tileSize;
   float mouseWorldY = (mouseY - yOffSet) / tileSize;
-
   displayScale -= event.getCount() * zoomStep;
-  displayScale = constrain(displayScale, 0.5, 2.0);
-
+  // Clamp zoom 7 to max 1.1
+  if (streetMap.currentZoom == 7) {
+    displayScale = constrain(displayScale, 1.1, 2.0);
+    } else {
+    displayScale = constrain(displayScale, 0.5, 2.0);
+  }
+  
   if (displayScale >= 2.0 && streetMap.currentZoom < streetMap.maxZoom) {
     streetMap.currentZoom++;
     adjustOffsetAfterZoom(mouseX, mouseY, mouseWorldX, mouseWorldY, 2.0);
@@ -54,18 +68,27 @@ void mouseWheel(MouseEvent event) {
 void adjustOffsetAfterZoom(float mouseX, float mouseY, float worldX, float worldY, float zoomScale) {
   xOffSet = mouseX - worldX * tileSize * zoomScale;
   yOffSet = mouseY - worldY * tileSize * zoomScale;
-
   displayScale = 1.0;
   streetMap.tiles.clear();
-
-  // Clamp offsets after zoom
-  float minX = -longToXTile(streetMap.minLon, streetMap.currentZoom) * tileSize;
-  float maxX = width - longToXTile(streetMap.maxLon, streetMap.currentZoom) * tileSize;
-  float minY = -latToYTile(streetMap.maxLat, streetMap.currentZoom) * tileSize;
-  float maxY = height - latToYTile(streetMap.minLat, streetMap.currentZoom) * tileSize;
-
-  xOffSet = constrain(xOffSet, maxX, minX);
-  yOffSet = constrain(yOffSet, maxY, minY);
+  
+  float mapL = longToXTile(streetMap.minLon, streetMap.currentZoom) * tileSize;
+  float mapR = longToXTile(streetMap.maxLon, streetMap.currentZoom) * tileSize;
+  float mapT = latToYTile(streetMap.maxLat, streetMap.currentZoom) * tileSize;
+  float mapB = latToYTile(streetMap.minLat, streetMap.currentZoom) * tileSize;
+  
+  float mapW = mapR - mapL;
+  float mapH = mapB - mapT;
+  
+  float padX = width * 0.2;
+  float padY = height * 0.2;
+  
+  if (mapW > width) {
+    xOffSet = constrain(xOffSet, width - mapR - padX, -mapL + padX);
+  }
+  
+  if (mapH > height) {
+    yOffSet = constrain(yOffSet, height - mapB - padY, -mapT + padY);
+  }
 }
 
 // ---- Tile conversion ----
@@ -87,7 +110,6 @@ float latLontoScreenY(float lat, int zoom) {
   float tileY = latToYTile(lat, zoom);
   return tileY * tileSize + yOffSet;
 }
-
 
 void createEvent() {
   String n = "name";

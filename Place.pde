@@ -128,10 +128,11 @@ class attractions extends Location {
     }
   }
 
-  void showOnMap() {
+   void showOnMap() {
     attractionMarker = loadImage("attractionMarker.png");
-    image(attractionMarker, this.x, this.y, 30, 30);
-    text(this.name, this.x+20, this.y);
+    image(attractionMarker, this.x, this.y, 30/displayScale, 30/displayScale);
+    textSize(10/displayScale);
+    text(this.name, this.x+20/displayScale, this.y);
   }
   
 }

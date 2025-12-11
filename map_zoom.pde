@@ -46,8 +46,8 @@ void setup() {
   
   
   // Example bounding box for Ontario + Quebec
-  float minLat = 41.87, maxLat = 46.95;
-  float minLon = -83.051, maxLon = -70.928;
+  float minLat = 41.0, maxLat = 47.5;
+  float minLon = -84.0, maxLon = -70.0;
   
   //feeding into the stretmap
   streetMap = new TileMap(minLat, maxLat, minLon, maxLon, 7, 7, 9);
@@ -72,7 +72,7 @@ void draw() {
   scale(displayScale);
   translate(-width/2, -height/2);
   
-
+  
   if (simulateMap) {
      streetMap.update(xOffSet, yOffSet);
      streetMap.drawTiles();
@@ -82,9 +82,6 @@ void draw() {
     drawRoad(roadPoints);
   }
   
-  popMatrix();  
-  
-
   for (attractions a : attractionList) {
     a.checkInRange();
     a.update();
@@ -103,6 +100,10 @@ void draw() {
       }
     }
   }
+  
+  popMatrix();  
+  
+
   if (showCalendar){
     image(calendarImg, 150, 300);
     for (int i = 0; i < events.size(); i++){

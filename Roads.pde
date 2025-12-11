@@ -26,8 +26,8 @@ class Location{
  
  void update() {
    updateTargets();
-   x += (targetX - x) * 0.25;
-   y += (targetY - y) * 0.25;
+   x += (targetX - x) * 0.3;
+   y += (targetY - y) * 0.3;
  }
 }
 
