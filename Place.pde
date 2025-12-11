@@ -78,7 +78,6 @@ class City extends Location {
   }
 
   void showOnMap() {
-    println("hello");
     cityMarker = loadImage("cityMarker.png");
     image(cityMarker, this.x, this.y, 30, 30);
     textFont(font);
@@ -121,4 +120,5 @@ class attractions extends Location {
     text(this.name, this.x+20/displayScale, this.y);
   }
   
+
 }

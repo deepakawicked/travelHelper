@@ -29,13 +29,16 @@ City startCity, endCity;
 Boolean drawRoad = false;
 ArrayList<Location> roadPoints;
 
+ArrayList<attractions> viable = new ArrayList <attractions>();
 boolean showInfo = false;
 
 void setup() {
   frameRate(30);
   createGUI();
+  eventswin.setVisible(false);
   size(800, 800);
   font = createFont("Times New Roman", 15);
+  textFont(font);
   
   //calendar image
   imageMode(CENTER);
@@ -91,15 +94,23 @@ void draw() {
       if (a.category.equals(category.getSelectedText())){
         if (a.rating >= stars.getValueI()){          
           if (a.category.equals("Food")){
-          if(a.budget == budget.getValueI()){
+            if(a.budget == budget.getValueI()){
+              
+              if (viable.contains(a) == false) viable.add(a);
+              a.showOnMap();
+            }
+            else if (viable.contains(a)) viable.remove(a);
+          }
+          else{
             a.showOnMap();
+            if (viable.contains(a) == false) viable.add(a);
           }
         }
-        else a.showOnMap();
-        }
-      
+        else if (viable.contains(a)) viable.remove(a);
       }
+      else if (viable.contains(a)) viable.remove(a);
     }
+    else if (viable.contains(a)) viable.remove(a);
   }
   
   popMatrix();  
@@ -119,10 +130,27 @@ void draw() {
     fill(0);
     int hours = int(((routeDuration - (routeDuration % 3600))/3600));
     int mins = round((routeDuration % 3600)/60);
+    textSize(16);
     text(hours + " hr " + mins + " min", roadPoints.get(mid).x+10, roadPoints.get(mid).y + 30);
     
     int distance = round(routeDistance/1000);
     text(distance + " km", roadPoints.get(mid).x+10, roadPoints.get(mid).y + 60);
+  }
+  if (selected != null && showCalendar == false){
+    textAlign(LEFT);
+    fill(255);
+    rect(selected.x, selected.y, 150, 80);
+    fill(255,230,230);
+    rect(selected.x+60, selected.y + 45, 80, 30);
+    fill(0);
+    textSize(14);
+    text(selected.name, selected.x + 10, selected.y + 15);
+    text(selected.category, selected.x + 10, selected.y + 32);
+    text(int(selected.rating) + "/10", selected.x + 10, selected.y + 49);
+    textSize(14);
+    textAlign(CENTER);
+    text("Create Event", selected.x + 100, selected.y + 65);
+    textAlign(LEFT);
   }
   
   float mouseTileX = (mouseX - xOffSet) / tileSize;

@@ -18,15 +18,6 @@ synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:windo
   appc.background(230);
 } //_CODE_:window1:275781:
 
-public void addbutton(GButton source, GEvent event) { //_CODE_:add:708290:
-  createEvent();
-  
-} //_CODE_:add:708290:
-
-public void clearbutton(GButton source, GEvent event) { //_CODE_:clear:884790:
-  events.clear();
-} //_CODE_:clear:884790:
-
 public void startlist(GDropList source, GEvent event) { //_CODE_:start:737259:
   if (event == GEvent.SELECTED) {
    String selectedStart =  source.getSelectedText();
@@ -39,7 +30,6 @@ public void startlist(GDropList source, GEvent event) { //_CODE_:start:737259:
      
      println("Start City is", startCity.name);
    }
-  
   } //_CODE_:start:737259:
 
 public void endlist(GDropList source, GEvent event) { //_CODE_:end:696236:
@@ -54,28 +44,18 @@ public void endlist(GDropList source, GEvent event) { //_CODE_:end:696236:
      
      println("Start City is", endCity.name);
    }
-  
   } //_CODE_:end:696236:
 
 public void categorylist(GDropList source, GEvent event) { //_CODE_:category:612875:
-  println("category - GDropList >> GEvent." + event + " @ " + millis());
+
 } //_CODE_:category:612875:
 
 public void budgetslider(GCustomSlider source, GEvent event) { //_CODE_:budget:394047:
-  println("budget - GCustomSlider >> GEvent." + event + " @ " + millis());
+
 } //_CODE_:budget:394047:
 
 public void starsslider(GCustomSlider source, GEvent event) { //_CODE_:stars:653742:
-  println("stars - GCustomSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:stars:653742:
-
-public void durationslider(GSlider source, GEvent event) { //_CODE_:duration:258808:
-  //createEvent();
-  //clear();
-} //_CODE_:duration:258808:
-
-public void starttimelist(GDropList source, GEvent event) { //_CODE_:startTimes:262427:
-} //_CODE_:startTimes:262427:
 
 public void mapmakerbutton(GButton source, GEvent event) { //_CODE_:mapmaker:647962:
  ArrayList<Location> test = new ArrayList<Location>();
@@ -102,23 +82,6 @@ public void mapmakerbutton(GButton source, GEvent event) { //_CODE_:mapmaker:647
   
  } //_CODE_:mapmaker:647962:
 
-public void calendarbutton(GButton source, GEvent event) { //_CODE_:calendar:693927:
-  if (showCalendar) showCalendar = false;
-  else showCalendar = true;
-} //_CODE_:calendar:693927:
-
-public void redslider(GSlider source, GEvent event) { //_CODE_:rvalue:820318:
-  println("slider1 - GSlider >> GEvent." + event + " @ " + millis());
-} //_CODE_:rvalue:820318:
-
-public void greenslider(GSlider source, GEvent event) { //_CODE_:gvalue:483320:
-  println("slider2 - GSlider >> GEvent." + event + " @ " + millis());
-} //_CODE_:gvalue:483320:
-
-public void blueslider(GSlider source, GEvent event) { //_CODE_:bvalue:247986:
-  println("slider3 - GSlider >> GEvent." + event + " @ " + millis());
-} //_CODE_:bvalue:247986:
-
 public void imgButton1_click1(GImageButton source, GEvent event) { //_CODE_:imgButton1:411559:
   println("imgButton1 - GImageButton >> GEvent." + event + " @ " + millis());
 } //_CODE_:imgButton1:411559:
@@ -127,6 +90,44 @@ public void routeinfo(GButton source, GEvent event) { //_CODE_:info:298949:
   if (showInfo) showInfo = false;
   else showInfo = true;
 } //_CODE_:info:298949:
+
+//synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:eventswin:200472:
+//  appc.background(230);
+//} //_CODE_:eventswin:200472:
+
+public void durationslider(GSlider source, GEvent event) { //_CODE_:duration:451846:
+  println("duration - GSlider >> GEvent." + event + " @ " + millis());
+} //_CODE_:duration:451846:
+
+public void redslider(GSlider source, GEvent event) { //_CODE_:rvalue:756733:
+  println("rvalue - GSlider >> GEvent." + event + " @ " + millis());
+} //_CODE_:rvalue:756733:
+
+public void greenslider(GSlider source, GEvent event) { //_CODE_:gvalue:736120:
+  println("slider2 - GSlider >> GEvent." + event + " @ " + millis());
+} //_CODE_:gvalue:736120:
+
+public void blueslider(GSlider source, GEvent event) { //_CODE_:bvalue:417253:
+  println("slider3 - GSlider >> GEvent." + event + " @ " + millis());
+} //_CODE_:bvalue:417253:
+
+public void addbutton(GButton source, GEvent event) { //_CODE_:add:692087:
+  createEvent(selected);
+  //eventswin.setVisible(false);
+} //_CODE_:add:692087:
+
+public void clearbutton(GButton source, GEvent event) { //_CODE_:clear:890039:
+  events.clear();
+} //_CODE_:clear:890039:
+
+public void calendarbutton(GButton source, GEvent event) { //_CODE_:calendar:436293:
+  if (showCalendar) showCalendar = false;
+  else showCalendar = true;
+} //_CODE_:calendar:436293:
+
+public void starttimelist(GDropList source, GEvent event) { //_CODE_:startTimes:448248:
+  println("dropList1 - GDropList >> GEvent." + event + " @ " + millis());
+} //_CODE_:startTimes:448248:
 
 
 
@@ -137,7 +138,7 @@ public void createGUI(){
   G4P.setGlobalColorScheme(GCScheme.BLUE_SCHEME);
   G4P.setMouseOverEnabled(false);
   surface.setTitle("Sketch Window");
-  window1 = GWindow.getWindow(this, "window1", 0, 0, 380, 480, JAVA2D);
+  window1 = GWindow.getWindow(this, "window1", 0, 0, 380, 340, JAVA2D);
   window1.noLoop();
   window1.setActionOnClose(G4P.KEEP_OPEN);
   window1.addDrawHandler(this, "win_draw1");
@@ -149,84 +150,49 @@ public void createGUI(){
   label2.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label2.setText("Choose an ending city:");
   label2.setOpaque(false);
-  label4 = new GLabel(window1, 21, 251, 80, 20);
+  label4 = new GLabel(window1, 184, 127, 80, 20);
   label4.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label4.setText("Category:");
   label4.setOpaque(false);
-  label6 = new GLabel(window1, 17, 403, 80, 20);
+  label6 = new GLabel(window1, 204, 246, 80, 20);
   label6.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label6.setText("Star Rating:");
   label6.setOpaque(false);
-  label7 = new GLabel(window1, 215, 103, 80, 20);
-  label7.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  label7.setText("Calendar");
-  label7.setOpaque(true);
-  label8 = new GLabel(window1, 214, 121, 80, 20);
-  label8.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  label8.setText("Start time:");
-  label8.setOpaque(false);
-  label9 = new GLabel(window1, 209, 169, 92, 36);
-  label9.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  label9.setText("Duration (Minutes)");
-  label9.setOpaque(false);
-  add = new GButton(window1, 167, 370, 80, 30);
-  add.setText("Add");
-  add.setLocalColorScheme(GCScheme.GREEN_SCHEME);
-  add.addEventHandler(this, "addbutton");
-  clear = new GButton(window1, 259, 370, 80, 30);
-  clear.setText("Clear");
-  clear.setLocalColorScheme(GCScheme.RED_SCHEME);
-  clear.addEventHandler(this, "clearbutton");
   start = new GDropList(window1, 38, 45, 90, 80, 3, 10);
   start.setItems(loadStrings("list_737259"), 0);
   start.addEventHandler(this, "startlist");
   end = new GDropList(window1, 38, 106, 90, 80, 3, 10);
   end.setItems(loadStrings("list_696236"), 0);
   end.addEventHandler(this, "endlist");
-  category = new GDropList(window1, 20, 277, 90, 80, 3, 10);
+  category = new GDropList(window1, 184, 152, 90, 80, 3, 10);
   category.setItems(loadStrings("list_612875"), 0);
   category.addEventHandler(this, "categorylist");
-  budget = new GCustomSlider(window1, 18, 331, 100, 53, "blue18px");
+  budget = new GCustomSlider(window1, 185, 192, 100, 53, "blue18px");
   budget.setLimits(1, 1, 3);
   budget.setShowTicks(true);
   budget.setNumberFormat(G4P.INTEGER, 0);
   budget.setOpaque(false);
   budget.addEventHandler(this, "budgetslider");
-  stars = new GCustomSlider(window1, 16, 406, 100, 64, "red_yellow18px");
+  stars = new GCustomSlider(window1, 186, 250, 100, 64, "red_yellow18px");
   stars.setShowValue(true);
   stars.setLimits(1.0, 0.0, 10.0);
   stars.setShowTicks(true);
   stars.setNumberFormat(G4P.DECIMAL, 1);
   stars.setOpaque(false);
   stars.addEventHandler(this, "starsslider");
-  duration = new GSlider(window1, 205, 199, 100, 55, 10.0);
-  duration.setShowValue(true);
-  duration.setShowLimits(true);
-  duration.setLimits(30, 10, 300);
-  duration.setShowTicks(true);
-  duration.setNumberFormat(G4P.INTEGER, 0);
-  duration.setOpaque(false);
-  duration.addEventHandler(this, "durationslider");
-  label5 = new GLabel(window1, 19, 312, 80, 20);
+  label5 = new GLabel(window1, 199, 181, 80, 20);
   label5.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label5.setText("Budget:");
   label5.setOpaque(false);
-  label10 = new GLabel(window1, 15, 333, 25, 20);
-  label10.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  label10.setText("$");
-  label10.setOpaque(false);
-  label11 = new GLabel(window1, 53, 333, 24, 20);
+  label11 = new GLabel(window1, 227, 194, 28, 20);
   label11.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label11.setText("$$");
   label11.setOpaque(false);
-  label12 = new GLabel(window1, 90, 333, 32, 21);
+  label12 = new GLabel(window1, 266, 194, 32, 21);
   label12.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label12.setText("$$$");
   label12.setOpaque(false);
-  startTimes = new GDropList(window1, 210, 142, 90, 80, 3, 10);
-  startTimes.setItems(loadStrings("list_262427"), 0);
-  startTimes.addEventHandler(this, "starttimelist");
-  label13 = new GLabel(window1, 17, 212, 143, 20);
+  label13 = new GLabel(window1, 185, 103, 143, 20);
   label13.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label13.setText("Attractions + Stops:");
   label13.setOpaque(true);
@@ -234,37 +200,79 @@ public void createGUI(){
   mapmaker.setText("Create Map!");
   mapmaker.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   mapmaker.addEventHandler(this, "mapmakerbutton");
-  calendar = new GButton(window1, 211, 406, 80, 30);
-  calendar.setText("View Calendar");
-  calendar.setLocalColorScheme(GCScheme.GOLD_SCHEME);
-  calendar.addEventHandler(this, "calendarbutton");
-  rvalue = new GSlider(window1, 205, 284, 100, 40, 10.0);
-  rvalue.setLimits(123, 0, 255);
-  rvalue.setNumberFormat(G4P.INTEGER, 0);
-  rvalue.setLocalColorScheme(GCScheme.RED_SCHEME);
-  rvalue.setOpaque(false);
-  rvalue.addEventHandler(this, "redslider");
-  gvalue = new GSlider(window1, 205, 311, 100, 40, 10.0);
-  gvalue.setLimits(123, 0, 255);
-  gvalue.setNumberFormat(G4P.INTEGER, 0);
-  gvalue.setLocalColorScheme(GCScheme.GREEN_SCHEME);
-  gvalue.setOpaque(false);
-  gvalue.addEventHandler(this, "greenslider");
-  bvalue = new GSlider(window1, 205, 340, 100, 40, 10.0);
-  bvalue.setLimits(123, 0, 255);
-  bvalue.setNumberFormat(G4P.INTEGER, 0);
-  bvalue.setOpaque(false);
-  bvalue.addEventHandler(this, "blueslider");
-  label3 = new GLabel(window1, 216, 270, 80, 20);
-  label3.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
-  label3.setText("Colour");
-  label3.setOpaque(false);
   imgButton1 = new GImageButton(window1, 185, 5, 150, 93, new String[] { "journeylog.png", "journeylog.png", "journeylog.png" } );
   imgButton1.addEventHandler(this, "imgButton1_click1");
   info = new GButton(window1, 48, 171, 64, 25);
   info.setText("Show route info");
   info.addEventHandler(this, "routeinfo");
+  label3 = new GLabel(window1, 182, 194, 20, 20);
+  label3.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  label3.setText("$");
+  label3.setOpaque(false);
+  eventswin = GWindow.getWindow(this, "eventswin", 0, 0, 240, 250, JAVA2D);
+  eventswin.noLoop();
+  eventswin.setActionOnClose(G4P.KEEP_OPEN);
+  eventswin.addDrawHandler(this, "win_draw1");
+  duration = new GSlider(eventswin, 19, 118, 100, 40, 10.0);
+  duration.setShowValue(true);
+  duration.setLimits(30, 10, 300);
+  duration.setShowTicks(true);
+  duration.setNumberFormat(G4P.INTEGER, 0);
+  duration.setLocalColorScheme(GCScheme.ORANGE_SCHEME);
+  duration.setOpaque(false);
+  duration.addEventHandler(this, "durationslider");
+  rvalue = new GSlider(eventswin, 132, 110, 100, 40, 10.0);
+  rvalue.setLimits(255, 0, 255);
+  rvalue.setNumberFormat(G4P.INTEGER, 0);
+  rvalue.setLocalColorScheme(GCScheme.RED_SCHEME);
+  rvalue.setOpaque(false);
+  rvalue.addEventHandler(this, "redslider");
+  gvalue = new GSlider(eventswin, 131, 139, 100, 40, 10.0);
+  gvalue.setLimits(245, 0, 255);
+  gvalue.setNumberFormat(G4P.INTEGER, 0);
+  gvalue.setLocalColorScheme(GCScheme.GREEN_SCHEME);
+  gvalue.setOpaque(false);
+  gvalue.addEventHandler(this, "greenslider");
+  bvalue = new GSlider(eventswin, 131, 162, 100, 40, 10.0);
+  bvalue.setLimits(245, 0, 255);
+  bvalue.setNumberFormat(G4P.INTEGER, 0);
+  bvalue.setOpaque(false);
+  bvalue.addEventHandler(this, "blueslider");
+  add = new GButton(eventswin, 17, 169, 80, 30);
+  add.setText("Add");
+  add.setLocalColorScheme(GCScheme.CYAN_SCHEME);
+  add.addEventHandler(this, "addbutton");
+  clear = new GButton(eventswin, 16, 204, 80, 30);
+  clear.setText("Clear");
+  clear.setLocalColorScheme(GCScheme.RED_SCHEME);
+  clear.addEventHandler(this, "clearbutton");
+  calendar = new GButton(eventswin, 142, 207, 80, 30);
+  calendar.setText("View Calendar");
+  calendar.setLocalColorScheme(GCScheme.YELLOW_SCHEME);
+  calendar.addEventHandler(this, "calendarbutton");
+  label14 = new GLabel(eventswin, 147, 86, 80, 20);
+  label14.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  label14.setText("Colour");
+  label14.setLocalColorScheme(GCScheme.PURPLE_SCHEME);
+  label14.setOpaque(false);
+  label15 = new GLabel(eventswin, 81, 4, 80, 20);
+  label15.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  label15.setText("Calendar");
+  label15.setOpaque(true);
+  label16 = new GLabel(eventswin, 30, 94, 80, 24);
+  label16.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  label16.setText("Duration (Minutes)");
+  label16.setOpaque(false);
+  startTimes = new GDropList(eventswin, 78, 55, 90, 80, 3, 10);
+  startTimes.setItems(loadStrings("list_448248"), 0);
+  startTimes.setLocalColorScheme(GCScheme.GOLD_SCHEME);
+  startTimes.addEventHandler(this, "starttimelist");
+  label17 = new GLabel(eventswin, 83, 33, 80, 20);
+  label17.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
+  label17.setText("Start Times:");
+  label17.setOpaque(false);
   window1.loop();
+  eventswin.loop();
 }
 
 // Variable declarations 
@@ -274,28 +282,29 @@ GLabel label1;
 GLabel label2; 
 GLabel label4; 
 GLabel label6; 
-GLabel label7; 
-GLabel label8; 
-GLabel label9; 
-GButton add; 
-GButton clear; 
 GDropList start; 
 GDropList end; 
 GDropList category; 
 GCustomSlider budget; 
 GCustomSlider stars; 
-GSlider duration; 
 GLabel label5; 
-GLabel label10; 
 GLabel label11; 
 GLabel label12; 
-GDropList startTimes; 
 GLabel label13; 
 GButton mapmaker; 
-GButton calendar; 
+GImageButton imgButton1; 
+GButton info; 
+GLabel label3; 
+GWindow eventswin;
+GSlider duration; 
 GSlider rvalue; 
 GSlider gvalue; 
 GSlider bvalue; 
-GLabel label3; 
-GImageButton imgButton1; 
-GButton info; 
+GButton add; 
+GButton clear; 
+GButton calendar; 
+GLabel label14; 
+GLabel label15; 
+GLabel label16; 
+GDropList startTimes; 
+GLabel label17; 

@@ -39,7 +39,6 @@ class Event{
   }
   
   void drawEvent(){
-    textFont(font);
       
     boolean notBooked = this.checkOverlap();
     
@@ -47,6 +46,7 @@ class Event{
       
       if (selected){
         textAlign(LEFT);
+        textSize(14);
         fill(this.colour);
         rect(280, 37.48 + 30.88*(this.startTime-6), 200, 75);
         fill(0);
@@ -69,7 +69,8 @@ class Event{
       
       stroke(0);
       strokeWeight(1);
-      
+      textAlign(LEFT);
+      textSize(10/displayScale);
       
       
       
@@ -78,9 +79,9 @@ class Event{
    else{
      
      fill(222,255,222);
-     rect(width/2-150, height/2-30, 300, 50);
+     //rect(width/2-150, height/2-30, 300, 50);
      fill(0);
-     text("Please ensure your events aren't overlapping!", width/2 -130, height/2);
+     //text("Please ensure your events aren't overlapping!", width/2 -130, height/2);
      //println("Please ensure your events aren't overlapping!");
      events.remove(this);
    }

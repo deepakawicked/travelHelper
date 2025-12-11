@@ -1,3 +1,5 @@
+attractions selected;
+
 // ---- Panning and zoom functions ----
 void mousePressed() {
   dragging = true;
@@ -12,6 +14,21 @@ void mousePressed() {
       }
     }
   }
+  for (int i = 0; i < attractionList.size(); i++){
+    if ((attractionList.get(i).x - 30 <= mouseX && mouseX <= (attractionList.get(i).x + 30))&&(attractionList.get(i).y - 30 <= mouseY && mouseY <= (attractionList.get(i).y + 30))){
+      attractions chosen = attractionList.get(i);
+      boolean in = viable.contains(chosen);
+      if (in) selected = chosen;
+    }
+  }
+  
+  //for (int i = 0; i < viable.size(); i++)println(viable.get(i).category);
+  
+  //Create event box
+  if (selected != null && (selected.x+60 <= mouseX && mouseX <= selected.x+140)&&(selected.y + 45 <= mouseY && mouseY <= selected.y + 75)){
+    eventswin.setVisible(true);
+  }
+      
 }
 
 void mouseDragged() {
@@ -111,8 +128,8 @@ float latLontoScreenY(float lat, int zoom) {
   return tileY * tileSize + yOffSet;
 }
 
-void createEvent() {
-  String n = "name";
+void createEvent(attractions a){
+  String n = a.name;
   String st = startTimes.getSelectedText();
   int d = duration.getValueI();
   events.add(new Event(n, st, d));
