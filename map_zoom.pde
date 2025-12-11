@@ -29,6 +29,7 @@ City startCity, endCity;
 Boolean drawRoad = false;
 ArrayList<Location> roadPoints;
 
+boolean showInfo = false;
 
 void setup() {
   frameRate(30);
@@ -111,6 +112,18 @@ void draw() {
     }
   }
   
+  if (showInfo && roadPoints != null){
+    int mid = numPoints/2;
+    fill(255);
+    rect(roadPoints.get(mid).x, roadPoints.get(mid).y + 10, 120, 60);
+    fill(0);
+    int hours = int(((routeDuration - (routeDuration % 3600))/3600));
+    int mins = round((routeDuration % 3600)/60);
+    text(hours + " hr " + mins + " min", roadPoints.get(mid).x+10, roadPoints.get(mid).y + 30);
+    
+    int distance = round(routeDistance/1000);
+    text(distance + " km", roadPoints.get(mid).x+10, roadPoints.get(mid).y + 60);
+  }
   
   float mouseTileX = (mouseX - xOffSet) / tileSize;
   float mouseTileY = (mouseY - yOffSet) / tileSize;

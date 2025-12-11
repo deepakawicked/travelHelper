@@ -50,10 +50,6 @@ void loadAttractions() {
     attractionList.add(a);    a.checkInRange();
     a.update();
 
-    if (a.inRange == true) {
-      a.checkCategory();
-      a.showOnMap();
-    }
   }
 }
 
@@ -116,17 +112,7 @@ class attractions extends Location {
     this.inRange = true;
   }
 
-  void checkCategory() {
-    if (this.category == "food") {
-      this.food = true;
-    } else if (this.category == "touristHotspot") {
-      this.touristHotspot = true;
-    } else if (this.category == "nature") {
-      this.nature = true;
-    } else {
-      this.museum = true;
-    }
-  }
+
 
    void showOnMap() {
     attractionMarker = loadImage("attractionMarker.png");

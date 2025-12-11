@@ -1,3 +1,4 @@
+int numPoints;
 class Location{
  String name;
  float lat, lon, x, y, targetX, targetY;
@@ -79,7 +80,7 @@ void drawRoad(ArrayList<Location> places) {
     if (roadAnimProgress >= 1.0) roadAnimating = false;
   }
   
-  int numPoints = constrain((int)(places.size() * roadAnimProgress), 2, places.size());
+  numPoints = constrain((int)(places.size() * roadAnimProgress), 2, places.size());
   
   stroke(50, 150, 255, 200);
   strokeWeight(4 / displayScale);
