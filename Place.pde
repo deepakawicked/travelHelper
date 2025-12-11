@@ -1,7 +1,11 @@
+// ---- Load Cities and Attractions Data ----
 ArrayList<attractions> attractionList = new ArrayList<attractions>();
 ArrayList<City> cityList = new ArrayList<City>();
+//making two array list to store cities and attractions
 
-void loadCity() { //loads the cities and stores data 
+void loadCity() {
+//load the cities and store the data 
+
   String[] cityData  = loadStrings("city.txt");
   
   for(int i = 0; i < cityData.length; i++) {
@@ -10,16 +14,18 @@ void loadCity() { //loads the cities and stores data
      String cityName = listData[0].trim();
      float cityLat = float(listData[1].trim());
      float cityLong = float(listData[2].trim());
+     //load the city data
      
      
      City newCity = new City(cityName, cityLat, cityLong);
      cityList.add(newCity);
-     
+     //store the data that we just loaded in   
   }
-
 }
 
 void loadAttractions() {
+  //load the attractions and store the data
+  
   String[] lines = loadStrings("attraction/attractions.txt");
   String[] attractionName = loadStrings("attraction/attraction name.txt");
   String[] attractionRating = loadStrings("attraction/attraction rating.txt");
@@ -39,45 +45,56 @@ void loadAttractions() {
     
     float lat = float(coord[0]);
     float lon = float(coord[1]);
+    //load the attractions data
     
     int budget = 0;
     if (budgetText.equals("$")) budget = 1;
     else if (budgetText.equals("$$")) budget = 2;
     else budget = 3;
+    //load the budget
     
     attractions a = new attractions(name, rating, lat, lon, category, budget);
-
-    attractionList.add(a);    a.checkInRange();
+    attractionList.add(a);    
+    a.checkInRange();
     a.update();
+    //store the attractions data into the arraylist
 
   }
 }
 
 
+// ---- Cities and Attractions Classes ----  
 float startingLong, startingLat, endingLong, endingLat;
 String startingCity;
 String endingCity;
+//some global variables that we are going to use in the city class and attraction class
 
 class City extends Location {
   boolean getPicked = false;
+  //Field 
 
   City(String n, float lat, float lon) {
     super(n, lat, lon);
   }
+  //constructor
 
   void checkPicked() {
+    //detect if the city is chosen to be the starting city and ending city
     if (this.name.equals(startingCity)) {
       this.getPicked = true;
       startingLong = this.lon;
       startingLat = this.lat;
+      //set the starting long and lat to be the same as the picked city
     } else if (this.name.equals(endingCity)) {
       this.getPicked = true;
       endingLat = this.lat;
       endingLong = this.lon;
+      //set the ending long and lat to be the same as the picked city
     }
   }
 
   void showOnMap() {
+    //show the city on the screen
     cityMarker = loadImage("cityMarker.png");
     image(cityMarker, this.x, this.y, 30, 30);
     textFont(font);
@@ -85,6 +102,7 @@ class City extends Location {
     fill(255);
     text(this.name, this.x+20, this.y);
   }
+  //methods
 }
 
 
@@ -93,6 +111,7 @@ class attractions extends Location {
   float rating;
   String category;
   boolean inRange, food, touristHotspot, nature, museum;
+  //fields
 
   attractions(String n, float r, float lat, float lon, String c, int b) {
     super(n, lat, lon);
@@ -101,6 +120,7 @@ class attractions extends Location {
     this.budget = b;
     this.inRange = false;
   }
+  //constructor
 
   void checkInRange() {
     //if (startingLong - 1 < this.lon && this.lon < endingLong + 1 ||endingLong - 1 < this.lon && this.lon < startingLong + 1) {
@@ -109,7 +129,7 @@ class attractions extends Location {
     //  }
     //}
     this.inRange = true;
-  }
+  }//check if the attraction is near the trip
 
 
 
@@ -118,7 +138,7 @@ class attractions extends Location {
     image(attractionMarker, this.x, this.y, 30/displayScale, 30/displayScale);
     textSize(10/displayScale);
     text(this.name, this.x+20/displayScale, this.y);
-  }
+  }// shoow the attractions on the screen
   
-
+//methods
 }
