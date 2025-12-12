@@ -6,7 +6,7 @@ void mousePressed() {
   dragStartX = mouseX - xOffSet; //add respective mouse pos with the offset
   dragStartY = mouseY - yOffSet;
   
-  
+  //check if clicking on calendar events
   if (showCalendar){
     if (89 <= mouseX && mouseX <= 274){
       for (int i = 0; i < events.size(); i++){
@@ -16,19 +16,42 @@ void mousePressed() {
       }
     }
   }
+  
+  boolean clickedAttraction = false; //track if an attraction was clicked
+  
+  //Transform mouse coords to match the scaled map coordinates
+  float scaledMouseX = (mouseX - width/2) / displayScale + width/2;
+  float scaledMouseY = (mouseY - height/2) / displayScale + height/2;
+  
+  //check if clicking on any attractions with scaled hitbox
   for (int i = 0; i < attractionList.size(); i++){
-    if ((attractionList.get(i).x - 30 <= mouseX && mouseX <= (attractionList.get(i).x + 30))&&(attractionList.get(i).y - 30 <= mouseY && mouseY <= (attractionList.get(i).y + 30))){
-      attractions chosen = attractionList.get(i);
-      boolean in = viable.contains(chosen);
-      if (in) selected = chosen;
+    attractions a = attractionList.get(i);
+    float hitboxSize = 30 / displayScale; //scale hitbox with zoom
+    
+    if ((a.x - hitboxSize <= scaledMouseX && scaledMouseX <= a.x + hitboxSize) &&
+        (a.y - hitboxSize <= scaledMouseY && scaledMouseY <= a.y + hitboxSize)){
+      boolean in = viable.contains(a);
+      if (in) {
+        selected = a;
+        clickedAttraction = true;
+      }
     }
   }
   
-  //Create event box
-  if (selected != null && (selected.x+60 <= mouseX && mouseX <= selected.x+140)&&(selected.y + 45 <= mouseY && mouseY <= selected.y + 75)){
+  //Create event box - check if clicking "Create Event" button
+  if (selected != null && (selected.x+60 <= mouseX && mouseX <= selected.x+140)&&
+      (selected.y + 45 <= mouseY && mouseY <= selected.y + 75)){
     eventswin.setVisible(true);
   }
-      
+  
+  // Deselect attraction if clicked elsewhere (not on attraction or info box)
+  if (!clickedAttraction && selected != null) {
+    // Check if NOT clicking the info box
+    if (!(selected.x <= mouseX && mouseX <= selected.x+150 && 
+          selected.y <= mouseY && mouseY <= selected.y+80)) {
+      selected = null; //clear selection
+    }
+  }
 }
 
 void mouseDragged() {

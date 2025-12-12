@@ -22,7 +22,7 @@ class Event{
     else this.startTime = float(hour);
     
     //calculate end time 
-    hr = ((d - (d%60))/60);
+    this.hr = ((d - (d%60))/60);
     float min = d % 60;
     float minutes = float(minute) + min;
     

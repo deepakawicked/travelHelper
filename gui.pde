@@ -58,29 +58,41 @@ public void budgetslider(GCustomSlider source, GEvent event) { //_CODE_:budget:3
 public void starsslider(GCustomSlider source, GEvent event) { //_CODE_:stars:653742:
 } //_CODE_:stars:653742:
 
+
 public void mapmakerbutton(GButton source, GEvent event) { //_CODE_:mapmaker:647962:
- ArrayList<Location> currentRoute = new ArrayList<Location>(); // temp list to hold the current cites and attractions
+ ArrayList<Location> currentRoute = new ArrayList<Location>(); // temp list to hold the current cities and attractions
+ 
  // Create locations with correct constructor
-  if (startCity != null && endCity != null) {
+ if (startCity != null && endCity != null) {
     
     currentRoute.add(startCity); //add start city to the route list 
+    
+    // Add all attractions from events calendar in chronological order
+    for (Event e : events) {
+      // Find the attraction that matches this event's name
+      for (attractions a : attractionList) {
+        if (a.name.equals(e.name)) {
+          currentRoute.add(a); //add attraction as a stop
+          break;
+        }
+      }
+    }
+    
     currentRoute.add(endCity); //add end city to the end list 
     
-    //retrive the road points using the ORSM API (return list of interpolated points)
+    //retrieve the road points using the OSRM API (return list of interpolated points)
     roadPoints = retrievePoints(currentRoute);
     
     //check if the road return with valid points 
     if (roadPoints != null && roadPoints.size() > 0) {
-    drawRoad = true; //enable smooth road drawing 
-  } else {
-    println("Failed to load road");
+      drawRoad = true; //enable smooth road drawing 
+    } else {
+      println("Failed to load road");
+    }
   }
-  
-     }
 } //_CODE_:mapmaker:647962:
 
 public void imgButton1_click1(GImageButton source, GEvent event) { //_CODE_:imgButton1:411559:
-  println("imgButton1 - GImageButton >> GEvent." + event + " @ " + millis());
 } //_CODE_:imgButton1:411559:
 
 public void routeinfo(GButton source, GEvent event) { //_CODE_:info:298949:
@@ -93,19 +105,15 @@ public void routeinfo(GButton source, GEvent event) { //_CODE_:info:298949:
 //} //_CODE_:eventswin:200472:
 
 public void durationslider(GSlider source, GEvent event) { //_CODE_:duration:451846:
-  println("duration - GSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:duration:451846:
 
 public void redslider(GSlider source, GEvent event) { //_CODE_:rvalue:756733:
-  println("rvalue - GSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:rvalue:756733:
 
 public void greenslider(GSlider source, GEvent event) { //_CODE_:gvalue:736120:
-  println("slider2 - GSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:gvalue:736120:
 
 public void blueslider(GSlider source, GEvent event) { //_CODE_:bvalue:417253:
-  println("slider3 - GSlider >> GEvent." + event + " @ " + millis());
 } //_CODE_:bvalue:417253:
 
 public void addbutton(GButton source, GEvent event) { //_CODE_:add:692087:
@@ -123,7 +131,6 @@ public void calendarbutton(GButton source, GEvent event) { //_CODE_:calendar:436
 } //_CODE_:calendar:436293:
 
 public void starttimelist(GDropList source, GEvent event) { //_CODE_:startTimes:448248:
-  println("dropList1 - GDropList >> GEvent." + event + " @ " + millis());
 } //_CODE_:startTimes:448248:
 
 

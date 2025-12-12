@@ -69,29 +69,9 @@ String endingCity;
 //some global variables that we are going to use in the city class and attraction class
 
 class City extends Location {
-  boolean getPicked = false;
-  //Field 
-
   City(String n, float lat, float lon) {
     super(n, lat, lon);
   }
-  //constructor
-
-  void checkPicked() {
-    //detect if the city is chosen to be the starting city and ending city
-    if (this.name.equals(startingCity)) {
-      this.getPicked = true;
-      startingLong = this.lon;
-      startingLat = this.lat;
-      //set the starting long and lat to be the same as the picked city
-    } else if (this.name.equals(endingCity)) {
-      this.getPicked = true;
-      endingLat = this.lat;
-      endingLong = this.lon;
-      //set the ending long and lat to be the same as the picked city
-    }
-  }
-
   void showOnMap() {
     //show the city on the screen
     cityMarker = loadImage("cityMarker.png");
@@ -135,5 +115,5 @@ class attractions extends Location {
     text(this.name, this.x+20/displayScale, this.y); //display text 
   }
   
-//methods
+
 }
