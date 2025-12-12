@@ -24,8 +24,7 @@ void loadCity() {
 }
 
 void loadAttractions() {
-  //load the attractions and store the data
-  
+  //load the attractions and store the data (files are split due to an emence amount of data)
   String[] attractionName = loadStrings("attraction/attraction name.txt");
   String[] attractionRating = loadStrings("attraction/attraction rating.txt");
   String[] attractionCategory = loadStrings("attraction/attraction category.txt");
@@ -33,7 +32,8 @@ void loadAttractions() {
   String[] attractionPosition = loadStrings("attraction/attraction position.txt");
 
   for (int i = 0; i < attractionName.length; i++) {
-
+    
+    //set a fild per each file 
     String name = attractionName[i];
     float rating = float(attractionRating[i]);
     String category = attractionCategory[i];
@@ -121,23 +121,19 @@ class attractions extends Location {
   }
   //constructor
 
-  void checkInRange() {
-    //if (startingLong - 1 < this.lon && this.lon < endingLong + 1 ||endingLong - 1 < this.lon && this.lon < startingLong + 1) {
-    //  if (startingLat - 1 < this.lat && this.lat < endingLat + 1 || endingLat - 1 < this.lat && this.lat < startingLat) {
-    //    this.inRange = true;
-    //  }
-    //}
+  void checkInRange() { //check if the function is in range 
     this.inRange = true;
-  }//check if the attraction is near the trip
+  }
 
 
 
-   void showOnMap() {
+   void showOnMap() { //show all markers on map, based off the display scale so the markers are a consisenet size
+   //throughout scaling 
     attractionMarker = loadImage("attractionMarker.png");
-    image(attractionMarker, this.x, this.y, 30/displayScale, 30/displayScale);
-    textSize(10/displayScale);
-    text(this.name, this.x+20/displayScale, this.y);
-  }// shoow the attractions on the screen
+    image(attractionMarker, this.x, this.y, 30/displayScale, 30/displayScale); //load the attraction marker
+    textSize(15/displayScale); //scale the textsize to the zoom
+    text(this.name, this.x+20/displayScale, this.y); //display text 
+  }
   
 //methods
 }

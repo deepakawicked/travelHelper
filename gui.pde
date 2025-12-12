@@ -18,22 +18,24 @@ synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:windo
   appc.background(230);
 } //_CODE_:window1:275781:
 
+//updates the selected City from the GUI
 public void startlist(GDropList source, GEvent event) { //_CODE_:start:737259:
-  if (event == GEvent.SELECTED) {
-   String selectedStart =  source.getSelectedText();
+  if (event == GEvent.SELECTED) { //only run logic if a selection is made 
+   String selectedStart =  source.getSelectedText(); //get the text out of the scren
    
+   //Loop through all avaiable cities to find the mathc
    for (City a: cityList) {
      if (a.name.equals(selectedStart)) {
-        startCity = a;
+        startCity = a; //assign the city as our start 
      }
      }
-     
-     println("Start City is", startCity.name);
    }
   } //_CODE_:start:737259:
 
+
+//updates the end city from the GUI, same logic to startlist
 public void endlist(GDropList source, GEvent event) { //_CODE_:end:696236:
-    if (event == GEvent.SELECTED) {
+    if (event == GEvent.SELECTED) { 
    String selectedEnd =  source.getSelectedText();
    
    for (City a: cityList) {
@@ -42,7 +44,6 @@ public void endlist(GDropList source, GEvent event) { //_CODE_:end:696236:
      }
      }
      
-     println("Start City is", endCity.name);
    }
   } //_CODE_:end:696236:
 
@@ -58,29 +59,25 @@ public void starsslider(GCustomSlider source, GEvent event) { //_CODE_:stars:653
 } //_CODE_:stars:653742:
 
 public void mapmakerbutton(GButton source, GEvent event) { //_CODE_:mapmaker:647962:
- ArrayList<Location> test = new ArrayList<Location>();
+ ArrayList<Location> currentRoute = new ArrayList<Location>(); // temp list to hold the current cites and attractions
  // Create locations with correct constructor
   if (startCity != null && endCity != null) {
     
-    test.add(startCity);
-    test.add(endCity);
+    currentRoute.add(startCity); //add start city to the route list 
+    currentRoute.add(endCity); //add end city to the end list 
     
-    roadPoints = retrievePoints(test);
+    //retrive the road points using the ORSM API (return list of interpolated points)
+    roadPoints = retrievePoints(currentRoute);
     
+    //check if the road return with valid points 
     if (roadPoints != null && roadPoints.size() > 0) {
-    drawRoad = true;
-    println("Road loaded with " + roadPoints.size() + " points");
+    drawRoad = true; //enable smooth road drawing 
   } else {
     println("Failed to load road");
   }
   
-    
-  }
-  
-  
-  
-  
- } //_CODE_:mapmaker:647962:
+     }
+} //_CODE_:mapmaker:647962:
 
 public void imgButton1_click1(GImageButton source, GEvent event) { //_CODE_:imgButton1:411559:
   println("imgButton1 - GImageButton >> GEvent." + event + " @ " + millis());
@@ -117,7 +114,7 @@ public void addbutton(GButton source, GEvent event) { //_CODE_:add:692087:
 } //_CODE_:add:692087:
 
 public void clearbutton(GButton source, GEvent event) { //_CODE_:clear:890039:
-  events.clear();
+  events.clear(); //clear all events 
 } //_CODE_:clear:890039:
 
 public void calendarbutton(GButton source, GEvent event) { //_CODE_:calendar:436293:
