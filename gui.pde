@@ -171,7 +171,7 @@ public void createGUI(){
   category = new GDropList(window1, 184, 152, 90, 80, 3, 10);
   category.setItems(loadStrings("list_612875"), 0);
   category.addEventHandler(this, "categorylist");
-  budget = new GCustomSlider(window1, 183, 237, 100, 53, "green_red20px");
+  budget = new GCustomSlider(window1, 184, 247, 100, 53, "green_red20px");
   budget.setLimits(1, 1, 3);
   budget.setShowTicks(true);
   budget.setNumberFormat(G4P.INTEGER, 0);
@@ -179,7 +179,7 @@ public void createGUI(){
   budget.addEventHandler(this, "budgetslider");
   stars = new GCustomSlider(window1, 183, 181, 100, 64, "red_yellow18px");
   stars.setShowValue(true);
-  stars.setLimits(1.0, 0.0, 10.0);
+  stars.setLimits(6.7, 0.0, 10.0);
   stars.setShowTicks(true);
   stars.setNumberFormat(G4P.DECIMAL, 1);
   stars.setOpaque(false);
@@ -188,11 +188,11 @@ public void createGUI(){
   label5.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label5.setText("Budget:");
   label5.setOpaque(false);
-  label11 = new GLabel(window1, 217, 237, 28, 20);
+  label11 = new GLabel(window1, 212, 246, 28, 20);
   label11.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label11.setText("$$");
   label11.setOpaque(false);
-  label12 = new GLabel(window1, 269, 237, 32, 21);
+  label12 = new GLabel(window1, 247, 245, 32, 22);
   label12.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label12.setText("$$$");
   label12.setOpaque(false);
@@ -209,7 +209,7 @@ public void createGUI(){
   info = new GButton(window1, 46, 172, 72, 38);
   info.setText("Show route info");
   info.addEventHandler(this, "routeinfo");
-  label3 = new GLabel(window1, 177, 237, 20, 24);
+  label3 = new GLabel(window1, 185, 246, 20, 22);
   label3.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label3.setText("$");
   label3.setOpaque(false);
