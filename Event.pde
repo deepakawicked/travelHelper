@@ -17,7 +17,7 @@ class Event{
     String hour = st.substring(0, colon);
     String minute = st.substring(colon+1);
     
-    //convert star time stringto float 
+    //convert start time string to float 
     if (float(minute) == 30) this.startTime = float(hour) + 0.5;
     else this.startTime = float(hour);
     
@@ -90,12 +90,7 @@ class Event{
       
     }
    else{
-     
-     fill(222,255,222);
-     //rect(width/2-150, height/2-30, 300, 50);
      fill(0);
-     //text("Please ensure your events aren't overlapping!", width/2 -130, height/2);
-     //println("Please ensure your events aren't overlapping!");
      events.remove(this); //remove event if map is overlapping 
    }
   }
