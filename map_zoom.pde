@@ -44,7 +44,7 @@ void setup() {
   frameRate(30); //cap the frameRate to help lower end PCS.
   createGUI();
   eventswin.setVisible(false); //does not show events window until attraction is selected
-  
+
   
   size(800, 800);
   fill(0);
@@ -61,6 +61,10 @@ void setup() {
  //load the logo and background image 
   logo = loadImage("journeylog.png");
   bg = loadImage("background.png");
+  
+  bg.resize(32, 32);
+  
+  surface.setIcon(bg); //set icon to travelLog img
   
   
   // bounding box for Ontario and Quebec, extended out a bit to help with the background naf loops 
