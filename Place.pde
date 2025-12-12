@@ -24,7 +24,7 @@ void loadCity() {
 }
 
 void loadAttractions() {
-  //load the attractions and store the data (files are split due to an emence amount of data)
+  //load the attractions and store the data (files are split due to an ememwnce amount of data)
   String[] attractionName = loadStrings("attraction/attraction name.txt");
   String[] attractionRating = loadStrings("attraction/attraction rating.txt");
   String[] attractionCategory = loadStrings("attraction/attraction category.txt");
