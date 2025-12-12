@@ -15,10 +15,9 @@
  */
 
 synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:window1:275781:
-  appc.background(230);
+  appc.background(201,226,242);
 } //_CODE_:window1:275781:
 
-//updates the selected City from the GUI
 public void startlist(GDropList source, GEvent event) { //_CODE_:start:737259:
   if (event == GEvent.SELECTED) { //only run logic if a selection is made 
    String selectedStart =  source.getSelectedText(); //get the text out of the scren
@@ -32,8 +31,6 @@ public void startlist(GDropList source, GEvent event) { //_CODE_:start:737259:
    }
   } //_CODE_:start:737259:
 
-
-//updates the end city from the GUI, same logic to startlist
 public void endlist(GDropList source, GEvent event) { //_CODE_:end:696236:
     if (event == GEvent.SELECTED) { 
    String selectedEnd =  source.getSelectedText();
@@ -57,7 +54,6 @@ public void budgetslider(GCustomSlider source, GEvent event) { //_CODE_:budget:3
 
 public void starsslider(GCustomSlider source, GEvent event) { //_CODE_:stars:653742:
 } //_CODE_:stars:653742:
-
 
 public void mapmakerbutton(GButton source, GEvent event) { //_CODE_:mapmaker:647962:
  ArrayList<Location> currentRoute = new ArrayList<Location>(); // temp list to hold the current cities and attractions
@@ -99,6 +95,10 @@ public void routeinfo(GButton source, GEvent event) { //_CODE_:info:298949:
   if (showInfo) showInfo = false;
   else showInfo = true;
 } //_CODE_:info:298949:
+
+public void imgButton2_click1(GImageButton source, GEvent event) { //_CODE_:imgButton2:508188:
+  println("imgButton2 - GImageButton >> GEvent." + event + " @ " + millis());
+} //_CODE_:imgButton2:508188:
 
 //synchronized public void win_draw1(PApplet appc, GWinData data) { //_CODE_:eventswin:200472:
 //  appc.background(230);
@@ -158,7 +158,7 @@ public void createGUI(){
   label4.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label4.setText("Category:");
   label4.setOpaque(false);
-  label6 = new GLabel(window1, 204, 246, 80, 20);
+  label6 = new GLabel(window1, 183, 174, 80, 20);
   label6.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label6.setText("Star Rating:");
   label6.setOpaque(false);
@@ -171,28 +171,28 @@ public void createGUI(){
   category = new GDropList(window1, 184, 152, 90, 80, 3, 10);
   category.setItems(loadStrings("list_612875"), 0);
   category.addEventHandler(this, "categorylist");
-  budget = new GCustomSlider(window1, 185, 192, 100, 53, "blue18px");
+  budget = new GCustomSlider(window1, 183, 237, 100, 53, "green_red20px");
   budget.setLimits(1, 1, 3);
   budget.setShowTicks(true);
   budget.setNumberFormat(G4P.INTEGER, 0);
   budget.setOpaque(false);
   budget.addEventHandler(this, "budgetslider");
-  stars = new GCustomSlider(window1, 186, 250, 100, 64, "red_yellow18px");
+  stars = new GCustomSlider(window1, 183, 181, 100, 64, "red_yellow18px");
   stars.setShowValue(true);
   stars.setLimits(1.0, 0.0, 10.0);
   stars.setShowTicks(true);
   stars.setNumberFormat(G4P.DECIMAL, 1);
   stars.setOpaque(false);
   stars.addEventHandler(this, "starsslider");
-  label5 = new GLabel(window1, 199, 181, 80, 20);
+  label5 = new GLabel(window1, 183, 226, 63, 20);
   label5.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label5.setText("Budget:");
   label5.setOpaque(false);
-  label11 = new GLabel(window1, 227, 194, 28, 20);
+  label11 = new GLabel(window1, 217, 237, 28, 20);
   label11.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label11.setText("$$");
   label11.setOpaque(false);
-  label12 = new GLabel(window1, 266, 194, 32, 21);
+  label12 = new GLabel(window1, 269, 237, 32, 21);
   label12.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label12.setText("$$$");
   label12.setOpaque(false);
@@ -200,24 +200,26 @@ public void createGUI(){
   label13.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label13.setText("Attractions + Stops:");
   label13.setOpaque(true);
-  mapmaker = new GButton(window1, 39, 135, 80, 30);
+  mapmaker = new GButton(window1, 43, 135, 80, 30);
   mapmaker.setText("Create Map!");
   mapmaker.setLocalColorScheme(GCScheme.CYAN_SCHEME);
   mapmaker.addEventHandler(this, "mapmakerbutton");
   imgButton1 = new GImageButton(window1, 185, 5, 150, 93, new String[] { "journeylog.png", "journeylog.png", "journeylog.png" } );
   imgButton1.addEventHandler(this, "imgButton1_click1");
-  info = new GButton(window1, 48, 171, 64, 25);
+  info = new GButton(window1, 46, 172, 72, 38);
   info.setText("Show route info");
   info.addEventHandler(this, "routeinfo");
-  label3 = new GLabel(window1, 182, 194, 20, 20);
+  label3 = new GLabel(window1, 177, 237, 20, 24);
   label3.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
   label3.setText("$");
   label3.setOpaque(false);
+  imgButton2 = new GImageButton(window1, 18, 216, 131, 116, new String[] { "background.png", "background.png", "background.png" } );
+  imgButton2.addEventHandler(this, "imgButton2_click1");
   eventswin = GWindow.getWindow(this, "eventswin", 0, 0, 240, 250, JAVA2D);
   eventswin.noLoop();
   eventswin.setActionOnClose(G4P.KEEP_OPEN);
   eventswin.addDrawHandler(this, "win_draw1");
-  duration = new GSlider(eventswin, 19, 118, 100, 40, 10.0);
+  duration = new GSlider(eventswin, 20, 116, 100, 52, 10.0);
   duration.setShowValue(true);
   duration.setLimits(30, 10, 300);
   duration.setShowTicks(true);
@@ -269,7 +271,7 @@ public void createGUI(){
   label16.setOpaque(false);
   startTimes = new GDropList(eventswin, 78, 55, 90, 80, 3, 10);
   startTimes.setItems(loadStrings("list_448248"), 0);
-  startTimes.setLocalColorScheme(GCScheme.GOLD_SCHEME);
+  startTimes.setLocalColorScheme(GCScheme.GREEN_SCHEME);
   startTimes.addEventHandler(this, "starttimelist");
   label17 = new GLabel(eventswin, 83, 33, 80, 20);
   label17.setTextAlign(GAlign.CENTER, GAlign.MIDDLE);
@@ -299,6 +301,7 @@ GButton mapmaker;
 GImageButton imgButton1; 
 GButton info; 
 GLabel label3; 
+GImageButton imgButton2; 
 GWindow eventswin;
 GSlider duration; 
 GSlider rvalue; 

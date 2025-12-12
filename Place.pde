@@ -69,9 +69,11 @@ String endingCity;
 //some global variables that we are going to use in the city class and attraction class
 
 class City extends Location {
+  //Constructor
   City(String n, float lat, float lon) {
     super(n, lat, lon);
   }
+  //Methods
   void showOnMap() {
     //show the city on the screen
     cityMarker = loadImage("cityMarker.png");
@@ -81,17 +83,17 @@ class City extends Location {
     fill(255);
     text(this.name, this.x+20, this.y);
   }
-  //methods
 }
 
 
 class attractions extends Location {
+  //Fields
   int budget;
   float rating;
   String category;
   boolean inRange, food, touristHotspot, nature, museum;
-  //fields
-
+  
+  //Constructor
   attractions(String n, float r, float lat, float lon, String c, int b) {
     super(n, lat, lon);
     this.rating = r;
@@ -99,13 +101,11 @@ class attractions extends Location {
     this.budget = b;
     this.inRange = false;
   }
-  //constructor
 
+  //Methods
   void checkInRange() { //check if the function is in range 
     this.inRange = true;
   }
-
-
 
    void showOnMap() { //show all markers on map, based off the display scale so the markers are a consisenet size
    //throughout scaling 
@@ -114,6 +114,4 @@ class attractions extends Location {
     textSize(15/displayScale); //scale the textsize to the zoom
     text(this.name, this.x+20/displayScale, this.y); //display text 
   }
-  
-
 }

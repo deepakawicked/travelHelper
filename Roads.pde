@@ -1,6 +1,6 @@
-
 //represents a geographic location, or "point" on the map. using for attractions, Cities, and road points 
 class Location{
+ //Fields
  String name;
  float lat, lon, x, y, targetX, targetY;
  
@@ -22,7 +22,7 @@ class Location{
    this.x = targetX;
    this.y = targetY;
  }
- 
+ //Methods
  //update target screen positon with map zoom and offset (using the offset function found in the helper functions)
  void updateTargets() {
    targetX = latLonToScreenX(lon, streetMap.currentZoom) - 128; //offset given to line roads with map
@@ -63,9 +63,8 @@ ArrayList<Location> retrievePoints(ArrayList<Location> stops) { //the stopos can
        routeDuration = routeObj.getFloat("duration"); //estimated duration in seconds 
        
        JSONArray coords = routeObj.getJSONObject("geometry").getJSONArray("coordinates"); //navigate to the road points 
-       
-      
-      //
+          
+          
        for (int i = 0; i < coords.size(); i++) { 
          JSONArray pt = coords.getJSONArray(i); //create an object to get the poitn
          roadPoint.add(new Location(pt.getFloat(1), pt.getFloat(0))); //asign in the roadPoint class 
@@ -100,7 +99,6 @@ void drawRoad(ArrayList<Location> places) {
   if (pointsToDraw > totalPoints) pointsToDraw = totalPoints;
   numPoints = pointsToDraw;
 
-  
   stroke(50, 150, 255, 200); //Road color
   strokeWeight(4 / displayScale); //scale stroke (size) with zoom, to prevent it eclipsing detail
   noFill();

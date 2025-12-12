@@ -75,7 +75,7 @@ void mouseDragged() {
     float padX = width * 0.2; //20% padding both horizontally and vertically 
     float padY = height * 0.2;
     
-    //only contrast if the map is larger than the scren 
+    //only contrast if the map is larger than the screen 
     if (mapW > width) {
       xOffSet = constrain(xOffSet, width - mapR - padX, -mapL + padX); //left bound, to right bound 
     }

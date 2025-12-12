@@ -36,17 +36,20 @@ int numPoints;
 float roadAnimProgress = 0; 
 boolean roadAnimating = false;
 
+//attraction variables
 ArrayList<attractions> viable = new ArrayList <attractions>();
 boolean showInfo = false;
 
 void setup() {
   frameRate(30); //cap the frameRate to help lower end PCS.
   createGUI();
-  
-  eventswin.setVisible(false);
+  eventswin.setVisible(false); //does not show events window until attraction is selected
   
   
   size(800, 800);
+  fill(0);
+  
+  //font
   font = createFont("Times New Roman", 15);
   textFont(font);
   
@@ -114,20 +117,20 @@ void draw() {
     
     //filter attractions 
     if (a.inRange) { //if in the map views 
-      if (a.category.equals(category.getSelectedText())){ //matchs the selected one 
-        if (a.rating >= stars.getValueI()){   //meets minimum require (from the slider)    
+      if (a.category.equals(category.getSelectedText())){ //matches the selected one 
+        if (a.rating >= stars.getValueI()){   //meets minimum requirement (from the slider)    
         
-          if (a.category.equals("Food")){ //checks the food catagory
+          if (a.category.equals("Food")){ //checks the food catagory (only food is bound by price)
             if(a.budget == budget.getValueI()){
               
-              //if no visible, add to the visible list 
+              //if not visible, add to the visible list - will only add each attraction once
               if (viable.contains(a) == false) viable.add(a);
               a.showOnMap(); //display on map 
             }
-            else if (viable.contains(a)) viable.remove(a);
+            else if (viable.contains(a)) viable.remove(a); 
           }
           else{
-            a.showOnMap(); //display non-food attracitons 
+            a.showOnMap(); //display non-food attractions 
             if (viable.contains(a) == false) viable.add(a);
           }
         }
@@ -150,30 +153,35 @@ void draw() {
   
   
   //display info BOXES 
-  if (showInfo && roadPoints != null){ //  if the user wants to see the route info 
-    int mid = numPoints/2; // pick a middle pint to display info 
+  if (showInfo && roadPoints != null){ //  if the user wants to see the route info, route has been created
+    int mid = numPoints/2; // pick a middle point to display info 
     fill(255);
     rect(roadPoints.get(mid).x, roadPoints.get(mid).y + 10, 120, 60); //draw background box 
     fill(0);
+    
     int hours = int(((routeDuration - (routeDuration % 3600))/3600)); //calculate hours 
     int mins = round((routeDuration % 3600)/60); //calculate minutes 
+    
     textSize(16);
     text(hours + " hr " + mins + " min", roadPoints.get(mid).x+10, roadPoints.get(mid).y + 30); //format the text 
     
-    int distance = round(routeDistance/1000); //convert meters to kim
+    int distance = round(routeDistance/1000); //convert meters to km
     text(distance + " km", roadPoints.get(mid).x+10, roadPoints.get(mid).y + 60); //display distance 
   }
   if (selected != null && showCalendar == false){ //display selected attraction/event info
     textAlign(LEFT);
     fill(255);
-    rect(selected.x, selected.y, 150, 80); //background box 
+    
+    rect(selected.x, selected.y, 195, 80); //background box 
+    
     fill(255,230,230);
     rect(selected.x+60, selected.y + 45, 80, 30);
     fill(0);
-    textSize(14);
-    text(selected.name, selected.x + 10, selected.y + 15); //name
-    text(selected.category, selected.x + 10, selected.y + 32); //catagory 
-    text(int(selected.rating) + "/10", selected.x + 10, selected.y + 49); //rating 
+    textSize(16);
+    text(selected.name, selected.x + 5, selected.y + 15); //name
+    text(selected.category, selected.x + 5, selected.y + 32); //category 
+    text(int(selected.rating) + "/10", selected.x + 5, selected.y + 49); //rating 
+    
     textSize(14);
     textAlign(CENTER);
     text("Create Event", selected.x + 100, selected.y + 65); //button text 

@@ -1,10 +1,12 @@
 class Event{
+  //Fields
   String name, st, et;
   float startTime, endTime, hr;
   int duration;
   color colour;
   boolean selected;
   
+  //Constructor
   Event(String n, String st, int d){
     
     //user assignements (based of GUI) 
@@ -26,7 +28,7 @@ class Event{
     float min = d % 60;
     float minutes = float(minute) + min;
     
-    if (minutes >= 60){ //break into minutes if it wras over 60
+    if (minutes >= 60){ //break into minutes if it was over 60
       minutes %= 60;
       hr++;//parse up hours 
     }
@@ -56,7 +58,7 @@ class Event{
         textSize(14);
         fill(this.colour);
         
-        //create a rectangle with the information - Highlight if the even is celected 
+        //create a rectangle with the information - Highlight if the event is celected 
         rect(280, 37.48 + 30.88*(this.startTime-6), 200, 75);
         fill(0);
         text("Location: " + this.name, 290, 60 + 30.88*(this.startTime-6));
@@ -67,7 +69,7 @@ class Event{
         
       }
       
-      //draw event rectangle in scedule 
+      //draw event rectangle in schedule 
       textAlign(CENTER);
       fill(this.colour);
       rect(89, 37.48 + 30.88*(this.startTime-6), 185, this.duration*0.51467);
@@ -96,7 +98,7 @@ class Event{
   }
   
   
-  //checks if currently being create event overlaps with any other events 
+  //checks if currently being created event overlaps with any other events 
   boolean checkOverlap(){
     //boolean intersection = true;
     for (int i = 0; i < events.size(); i++){
